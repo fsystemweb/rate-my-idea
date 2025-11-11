@@ -23,9 +23,9 @@ export function createServer() {
         await connectDB();
         dbInitialized = true;
       } catch (error) {
-        console.warn("Database connection failed - using mock data mode:", error);
+        const errMsg = error && (error as Error).message ? (error as Error).message : String(error);
+        console.warn("Database connection failed - using mock data mode:", errMsg);
         dbInitError = true;
-        // Continue without database in dev mode
       }
     }
     next();
