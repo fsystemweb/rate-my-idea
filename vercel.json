@@ -1,29 +1,10 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "package.json",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "dist/spa",
-        "buildCommand": "npm run build",
-        "framework": "vite"
-      }
-    },
-    {
-      "src": "server/**/*.js",
-      "use": "@vercel/node"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "/dist/spa/index.html"
-    }
-  ],
-  "functions": {
-    "server/**/*.js": {
-      "runtime": "nodejs20.x"
+  "build": {
+    "src": "package.json",
+    "use": "@vercel/static-build",
+    "config": {
+      "distDir": "dist/spa"
     }
   }
 }
