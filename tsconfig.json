@@ -2,10 +2,13 @@
   "compilerOptions": {
     "target": "ES2020",
     "useDefineForClassFields": true,
-    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "lib": [
+      "ES2020",
+      "DOM",
+      "DOM.Iterable"
+    ],
     "module": "ESNext",
     "skipLibCheck": true,
-
     /* Bundler mode */
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
@@ -16,7 +19,6 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
-
     /* Linting */
     "strict": false,
     "noUnusedLocals": false,
@@ -24,20 +26,27 @@
     "noImplicitAny": false,
     "noFallthroughCasesInSwitch": false,
     "strictNullChecks": false,
-
     /* Path mapping */
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./apps/client/*"],
-      "@shared/*": ["apps/shared/*"]
+      "@/*": [
+        "./apps/client/*"
+      ],
+      "@shared/*": [
+        "apps/shared/*"
+      ]
     }
   },
   "include": [
     "apps/client/**/*",
     "apps/api/**/*",
     "apps/shared/**/*",
-    "vite.config.ts",
-    "vite.config.server.ts"
-, "apps/models"  ],
-  "exclude": ["node_modules", "dist"]
+    "apps/client/vite.config.ts",
+    "apps/api/vite.config.ts",
+    "apps/models"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
 }

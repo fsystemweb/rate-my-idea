@@ -1,48 +1,30 @@
+// apps/api/index.ts
 import "dotenv/config";
 import express from "express";
 import cors from "cors";
-import serverless from "serverless-http";
-import { connectDB, closeDB } from "./db";
+import { connectDB } from "./db";
 import * as ideasRoutes from "./routes/ideas";
 import * as feedbackRoutes from "./routes/feedback";
 
-export function createServer() {
+export function createApp() {
   const app = express();
-
-  // Middleware
   app.use(cors());
   app.use(express.json());
-  app.use(express.urlencoded({ extended: true }));
 
-  // Initialize database on first request
-  let dbInitialized = false;
-  let dbInitError = false;
+  // Lazy DB init
+  let dbReady = false;
   app.use(async (req, res, next) => {
-    if (!dbInitialized && !dbInitError) {
+    if (!dbReady) {
       try {
         await connectDB();
-        dbInitialized = true;
-      } catch (error) {
-        const errMsg =
-          error && (error as Error).message
-            ? (error as Error).message
-            : String(error);
-        console.warn(
-          "Database connection failed - using mock data mode:",
-          errMsg
-        );
-        dbInitError = true;
+        dbReady = true;
+        console.log("Database connected");
+      } catch (e) {
+        console.warn("DB connection failed → running in mock mode");
       }
     }
     next();
   });
-
-  // Example API routes
-  app.get("/api/ping", (_req, res) => {
-    const ping = process.env.PING_MESSAGE ?? "ping";
-    res.json({ message: ping });
-  });
-
 
   // Ideas routes
   app.post("/api/ideas", ideasRoutes.createIdea);
@@ -56,29 +38,19 @@ export function createServer() {
   app.get("/api/ideas/:ideaId/dashboard", feedbackRoutes.getIdeaDashboard);
   app.get("/api/ideas/:ideaId/feedback", feedbackRoutes.getFeedback);
 
-  // Cleanup on shutdown
-  process.on("SIGINT", async () => {
-    await closeDB();
-    process.exit(0);
-  });
-
   return app;
 }
 
-const app = createServer();
+// === VERCEL HANDLER (only exported) ===
+let _handler: any;
 
-// Only run server in development
-if (process.env.NODE_ENV !== "production") {
-  const port = process.env.PORT || 3000;
-  app.listen(port, () => {
-    console.log(`API server running on port ${port}`);
-    console.log(`API: http://localhost:${port}/api`);
-  });
-
-  // Graceful shutdown
-  process.on("SIGTERM", () => process.exit(0));
-  process.on("SIGINT", () => process.exit(0));
+async function vercelHandler(req: any, res: any) {
+  if (!_handler) {
+    const app = createApp();
+    const { default: sls } = await import("serverless-http");
+    _handler = sls(app);
+  }
+  return _handler(req, res);
 }
 
-// === VERCEL: Export serverless handler ===
-export default serverless(app);
+export default vercelHandler;
