@@ -20,9 +20,7 @@ describe("IdeaDetail Page", () => {
   });
 
   it("renders loading state initially", () => {
-    const mockGetIdeaDetail = vi.fn(() => 
-      new Promise(() => {})
-    );
+    const mockGetIdeaDetail = vi.fn(() => new Promise(() => {}));
 
     vi.spyOn(apiModule, "api", "get").mockReturnValue({
       getIdeaDetail: mockGetIdeaDetail,
@@ -61,9 +59,9 @@ describe("IdeaDetail Page", () => {
   });
 
   it("displays error when idea not found", async () => {
-    const mockGetIdeaDetail = vi.fn().mockRejectedValue(
-      new Error("Idea not found")
-    );
+    const mockGetIdeaDetail = vi
+      .fn()
+      .mockRejectedValue(new Error("Idea not found"));
 
     vi.spyOn(apiModule, "api", "get").mockReturnValue({
       getIdeaDetail: mockGetIdeaDetail,

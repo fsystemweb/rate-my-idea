@@ -43,7 +43,7 @@ export default function Dashboard() {
         const ideaId = new URLSearchParams(window.location.search).get("id");
         if (!ideaId) {
           setError(
-            "Please provide both idea ID and creator token to view the dashboard"
+            "Please provide both idea ID and creator token to view the dashboard",
           );
           setIsLoading(false);
           return;
@@ -52,7 +52,9 @@ export default function Dashboard() {
         const dashboardData = await api.getDashboard(ideaId, token);
         setData(dashboardData);
       } catch (err) {
-        setError(err instanceof Error ? err.message : "Failed to load dashboard");
+        setError(
+          err instanceof Error ? err.message : "Failed to load dashboard",
+        );
       } finally {
         setIsLoading(false);
       }
@@ -122,9 +124,19 @@ export default function Dashboard() {
   }));
 
   const sentimentData = analytics.sentimentBreakdown.map((item: any) => ({
-    name: item._id === "positive" ? "Positive" : item._id === "negative" ? "Negative" : "Neutral",
+    name:
+      item._id === "positive"
+        ? "Positive"
+        : item._id === "negative"
+          ? "Negative"
+          : "Neutral",
     value: item.count,
-    fill: item._id === "positive" ? "#10b981" : item._id === "negative" ? "#ef4444" : "#6b7280",
+    fill:
+      item._id === "positive"
+        ? "#10b981"
+        : item._id === "negative"
+          ? "#ef4444"
+          : "#6b7280",
   }));
 
   const timeSeriesData = analytics.feedbackTimeSeries.map((item: any) => ({
@@ -234,7 +246,10 @@ export default function Dashboard() {
             <h3 className="text-lg font-bold mb-4">Rating Distribution</h3>
             <ResponsiveContainer width="100%" height={300}>
               <BarChart data={ratingData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                <CartesianGrid
+                  strokeDasharray="3 3"
+                  stroke="hsl(var(--border))"
+                />
                 <XAxis dataKey="rating" />
                 <YAxis />
                 <Tooltip
@@ -314,7 +329,10 @@ export default function Dashboard() {
             <h3 className="text-lg font-bold mb-4">Feedback Over Time</h3>
             <ResponsiveContainer width="100%" height={300}>
               <LineChart data={timeSeriesData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                <CartesianGrid
+                  strokeDasharray="3 3"
+                  stroke="hsl(var(--border))"
+                />
                 <XAxis dataKey="date" />
                 <YAxis />
                 <Tooltip
@@ -335,7 +353,13 @@ export default function Dashboard() {
                   strokeWidth={3}
                 />
                 <defs>
-                  <linearGradient id="lineGradient" x1="0" y1="0" x2="100%" y2="0">
+                  <linearGradient
+                    id="lineGradient"
+                    x1="0"
+                    y1="0"
+                    x2="100%"
+                    y2="0"
+                  >
                     <stop
                       offset="0%"
                       stopColor="hsl(var(--primary))"
@@ -400,11 +424,11 @@ export default function Dashboard() {
                 Cancel
               </button>
               <button
-              onClick={handleDelete}
-              className="flex-1 px-4 py-2 rounded-lg bg-destructive text-destructive-foreground hover:opacity-90 transition-opacity"
-            >
-              Delete
-            </button>
+                onClick={handleDelete}
+                className="flex-1 px-4 py-2 rounded-lg bg-destructive text-destructive-foreground hover:opacity-90 transition-opacity"
+              >
+                Delete
+              </button>
             </div>
           </div>
         </div>

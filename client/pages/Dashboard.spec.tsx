@@ -202,9 +202,7 @@ describe("Dashboard Page", () => {
           { _id: 5, count: 1 },
           { _id: 4, count: 1 },
         ],
-        sentimentBreakdown: [
-          { _id: "positive", count: 2 },
-        ],
+        sentimentBreakdown: [{ _id: "positive", count: 2 }],
         suggestions: [],
         feedbackTimeSeries: [],
       },

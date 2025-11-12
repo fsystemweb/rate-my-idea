@@ -1,5 +1,10 @@
 import { mockIdeas, mockFeedback, mockDashboard } from "@/mocks/data";
-import { type Idea, type CreateIdeaPayload, type FeedbackPayload, type DashboardData } from "./api";
+import {
+  type Idea,
+  type CreateIdeaPayload,
+  type FeedbackPayload,
+  type DashboardData,
+} from "./api";
 
 // In-memory storage for mock data
 let ideasStore = [...mockIdeas];
@@ -9,8 +14,10 @@ let creatorTokenMap: Record<string, string> = {
 };
 
 function generateToken(): string {
-  return Math.random().toString(36).substring(2, 15) +
-    Math.random().toString(36).substring(2, 15);
+  return (
+    Math.random().toString(36).substring(2, 15) +
+    Math.random().toString(36).substring(2, 15)
+  );
 }
 
 function delay(ms: number = 300): Promise<void> {
@@ -80,7 +87,7 @@ export const mockApi = {
   async updateIdea(
     id: string,
     creatorToken: string,
-    updates: Partial<CreateIdeaPayload>
+    updates: Partial<CreateIdeaPayload>,
   ) {
     await delay();
 
@@ -137,7 +144,10 @@ export const mockApi = {
       ideaId,
       rating: payload.rating,
       feedback: payload.feedback,
-      sentiment: analyzeSentiment(payload.feedback || "") as "positive" | "neutral" | "negative",
+      sentiment: analyzeSentiment(payload.feedback || "") as
+        | "positive"
+        | "neutral"
+        | "negative",
       createdAt: new Date().toLocaleDateString(),
     };
 
@@ -183,7 +193,10 @@ export const mockApi = {
     };
   },
 
-  async getDashboard(ideaId: string, creatorToken: string): Promise<DashboardData> {
+  async getDashboard(
+    ideaId: string,
+    creatorToken: string,
+  ): Promise<DashboardData> {
     await delay();
 
     if (creatorTokenMap[ideaId] !== creatorToken) {
@@ -209,7 +222,7 @@ export const mockApi = {
       (sentiment) => ({
         _id: sentiment,
         count: ideaFeedback.filter((f) => f.sentiment === sentiment).length,
-      })
+      }),
     );
 
     // Get suggestions (feedback with text)
@@ -217,7 +230,7 @@ export const mockApi = {
       .filter((f) => f.feedback)
       .sort(
         (a, b) =>
-          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
       )
       .slice(0, 10)
       .map((f) => ({
@@ -255,10 +268,10 @@ export const mockApi = {
         avgRating:
           ideaFeedback.length > 0
             ? Math.round(
-              (ideaFeedback.reduce((sum, f) => sum + f.rating, 0) /
-                ideaFeedback.length) *
-              10
-            ) / 10
+                (ideaFeedback.reduce((sum, f) => sum + f.rating, 0) /
+                  ideaFeedback.length) *
+                  10,
+              ) / 10
             : 0,
         ratingDistribution,
         sentimentBreakdown,

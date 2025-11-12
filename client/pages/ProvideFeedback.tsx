@@ -68,7 +68,9 @@ export default function ProvideFeedback() {
         navigate("/");
       }, 3000);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to submit feedback");
+      setError(
+        err instanceof Error ? err.message : "Failed to submit feedback",
+      );
       setIsSubmitting(false);
     }
   };
@@ -145,7 +147,9 @@ export default function ProvideFeedback() {
                   }`}
                 />
                 {passwordError && (
-                  <p className="text-sm text-destructive mt-2">{passwordError}</p>
+                  <p className="text-sm text-destructive mt-2">
+                    {passwordError}
+                  </p>
                 )}
               </div>
 
@@ -180,7 +184,9 @@ export default function ProvideFeedback() {
                 <span className="text-sm font-semibold text-muted-foreground">
                   Not Good
                 </span>
-                <span className="text-3xl font-bold text-primary">{rating}</span>
+                <span className="text-3xl font-bold text-primary">
+                  {rating}
+                </span>
                 <span className="text-sm font-semibold text-muted-foreground">
                   Excellent
                 </span>
@@ -294,11 +300,15 @@ export default function ProvideFeedback() {
 
             <div className="space-y-3">
               <p className="text-sm text-muted-foreground">
-                Rating: <span className="font-bold text-foreground">{rating}/10</span>
+                Rating:{" "}
+                <span className="font-bold text-foreground">{rating}/10</span>
               </p>
               {suggestion && (
                 <p className="text-sm text-muted-foreground">
-                  Suggestion recorded: <span className="font-semibold">{suggestion.substring(0, 50)}...</span>
+                  Suggestion recorded:{" "}
+                  <span className="font-semibold">
+                    {suggestion.substring(0, 50)}...
+                  </span>
                 </p>
               )}
             </div>

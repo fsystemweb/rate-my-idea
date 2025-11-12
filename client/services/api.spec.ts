@@ -38,7 +38,9 @@ describe("api", () => {
         isPrivate: false,
       };
 
-      vi.mocked(mockApiModule.mockApi.createIdea).mockResolvedValueOnce(mockResponse);
+      vi.mocked(mockApiModule.mockApi.createIdea).mockResolvedValueOnce(
+        mockResponse,
+      );
 
       const result = await api.createIdea(payload);
 
@@ -63,7 +65,9 @@ describe("api", () => {
         isPrivate: true,
       };
 
-      vi.mocked(mockApiModule.mockApi.createIdea).mockResolvedValueOnce(mockResponse);
+      vi.mocked(mockApiModule.mockApi.createIdea).mockResolvedValueOnce(
+        mockResponse,
+      );
 
       const result = await api.createIdea(payload);
 
@@ -73,14 +77,16 @@ describe("api", () => {
 
     it("should throw error on API failure", async () => {
       vi.mocked(mockApiModule.mockApi.createIdea).mockRejectedValueOnce(
-        new Error("Failed to create idea")
+        new Error("Failed to create idea"),
       );
 
-      await expect(api.createIdea({
-        title: "Test",
-        description: "Test",
-        isPrivate: false,
-      })).rejects.toThrow("Failed to create idea");
+      await expect(
+        api.createIdea({
+          title: "Test",
+          description: "Test",
+          isPrivate: false,
+        }),
+      ).rejects.toThrow("Failed to create idea");
     });
   });
 
@@ -106,7 +112,9 @@ describe("api", () => {
         },
       };
 
-      vi.mocked(mockApiModule.mockApi.getPublicIdeas).mockResolvedValueOnce(mockResponse);
+      vi.mocked(mockApiModule.mockApi.getPublicIdeas).mockResolvedValueOnce(
+        mockResponse,
+      );
 
       const result = await api.getPublicIdeas(1);
 
@@ -126,7 +134,9 @@ describe("api", () => {
         },
       };
 
-      vi.mocked(mockApiModule.mockApi.getPublicIdeas).mockResolvedValueOnce(mockResponse);
+      vi.mocked(mockApiModule.mockApi.getPublicIdeas).mockResolvedValueOnce(
+        mockResponse,
+      );
 
       const result = await api.getPublicIdeas();
 
@@ -148,7 +158,9 @@ describe("api", () => {
         createdBy: "Test User",
       };
 
-      vi.mocked(mockApiModule.mockApi.getIdeaDetail).mockResolvedValueOnce(mockIdea);
+      vi.mocked(mockApiModule.mockApi.getIdeaDetail).mockResolvedValueOnce(
+        mockIdea,
+      );
 
       const result = await api.getIdeaDetail("123");
 
@@ -158,11 +170,11 @@ describe("api", () => {
 
     it("should handle not found error", async () => {
       vi.mocked(mockApiModule.mockApi.getIdeaDetail).mockRejectedValueOnce(
-        new Error("Idea not found")
+        new Error("Idea not found"),
       );
 
       await expect(api.getIdeaDetail("invalid-id")).rejects.toThrow(
-        "Idea not found"
+        "Idea not found",
       );
     });
   });
@@ -184,7 +196,9 @@ describe("api", () => {
         isPrivate: false,
       };
 
-      vi.mocked(mockApiModule.mockApi.updateIdea).mockResolvedValueOnce(mockResponse);
+      vi.mocked(mockApiModule.mockApi.updateIdea).mockResolvedValueOnce(
+        mockResponse,
+      );
 
       const result = await api.updateIdea("123", "creator-token", updates);
 
@@ -192,7 +206,7 @@ describe("api", () => {
       expect(mockApiModule.mockApi.updateIdea).toHaveBeenCalledWith(
         "123",
         "creator-token",
-        updates
+        updates,
       );
     });
   });
@@ -204,12 +218,17 @@ describe("api", () => {
         message: "Idea deleted successfully",
       };
 
-      vi.mocked(mockApiModule.mockApi.deleteIdea).mockResolvedValueOnce(mockResponse);
+      vi.mocked(mockApiModule.mockApi.deleteIdea).mockResolvedValueOnce(
+        mockResponse,
+      );
 
       const result = await api.deleteIdea("123", "creator-token");
 
       expect(result.success).toBe(true);
-      expect(mockApiModule.mockApi.deleteIdea).toHaveBeenCalledWith("123", "creator-token");
+      expect(mockApiModule.mockApi.deleteIdea).toHaveBeenCalledWith(
+        "123",
+        "creator-token",
+      );
     });
   });
 
@@ -229,14 +248,16 @@ describe("api", () => {
         createdAt: "2024-01-01",
       };
 
-      vi.mocked(mockApiModule.mockApi.submitFeedback).mockResolvedValueOnce(mockResponse);
+      vi.mocked(mockApiModule.mockApi.submitFeedback).mockResolvedValueOnce(
+        mockResponse,
+      );
 
       const result = await api.submitFeedback("idea-123", payload);
 
       expect(result).toEqual(mockResponse);
       expect(mockApiModule.mockApi.submitFeedback).toHaveBeenCalledWith(
         "idea-123",
-        payload
+        payload,
       );
     });
 
@@ -256,7 +277,9 @@ describe("api", () => {
         createdAt: "2024-01-01",
       };
 
-      vi.mocked(mockApiModule.mockApi.submitFeedback).mockResolvedValueOnce(mockResponse);
+      vi.mocked(mockApiModule.mockApi.submitFeedback).mockResolvedValueOnce(
+        mockResponse,
+      );
 
       const result = await api.submitFeedback("idea-456", payload);
 
@@ -285,13 +308,17 @@ describe("api", () => {
         ],
       };
 
-      vi.mocked(mockApiModule.mockApi.getFeedback).mockResolvedValueOnce(mockResponse);
+      vi.mocked(mockApiModule.mockApi.getFeedback).mockResolvedValueOnce(
+        mockResponse,
+      );
 
       const result = await api.getFeedback("idea-123");
 
       expect(result.feedback).toHaveLength(2);
       expect(result.feedback[0].sentiment).toBe("positive");
-      expect(mockApiModule.mockApi.getFeedback).toHaveBeenCalledWith("idea-123");
+      expect(mockApiModule.mockApi.getFeedback).toHaveBeenCalledWith(
+        "idea-123",
+      );
     });
   });
 
@@ -328,7 +355,9 @@ describe("api", () => {
         feedback: [],
       };
 
-      vi.mocked(mockApiModule.mockApi.getDashboard).mockResolvedValueOnce(mockResponse);
+      vi.mocked(mockApiModule.mockApi.getDashboard).mockResolvedValueOnce(
+        mockResponse,
+      );
 
       const result = await api.getDashboard("idea-123", "creator-token");
 
@@ -336,7 +365,7 @@ describe("api", () => {
       expect(result.analytics.totalFeedback).toBe(42);
       expect(mockApiModule.mockApi.getDashboard).toHaveBeenCalledWith(
         "idea-123",
-        "creator-token"
+        "creator-token",
       );
     });
   });
