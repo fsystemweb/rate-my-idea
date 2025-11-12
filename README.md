@@ -9,7 +9,7 @@
 </p>
 
 <p align="center">
-  <a href="https://ratemyidea.us/"><strong>ratemyidea.us</strong></a>
+  <a href="https://rateidea.us/"><strong>rateidea.us</strong></a>
   <br>
 </p>
 
@@ -53,6 +53,7 @@ Important variables:
 - MONGODB_URI - MongoDB connection string (optional for dev; required to use real DB)
 - PORT - Port to run the server on (defaults to 3000 in built server)
 - PING_MESSAGE - Optional message returned by the `/api/ping` endpoint
+- DEV - Optional set true if you want to start without mongodb
 
 Example `.env`:
 
@@ -60,7 +61,7 @@ Example `.env`:
 MONGODB_URI=mongodb://localhost:27017/rate-my-idea
 PORT=3000
 PING_MESSAGE=hello
-DEV=true (if you want to start without mongodb)
+DEV=true
 ```
 
 ## Useful scripts
