@@ -14,7 +14,7 @@ export default function ProvideFeedback() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword] = useState(false);
   const [passwordError, setPasswordError] = useState("");
   const [rating, setRating] = useState(5);
   const [suggestion, setSuggestion] = useState("");
@@ -294,6 +294,7 @@ export default function ProvideFeedback() {
 
             <h1 className="text-3xl font-bold mb-2">Thank You!</h1>
             <p className="text-muted-foreground mb-8">
+              {/* eslint-disable-next-line react/no-unescaped-entities */}
               Your feedback has been recorded. You'll be redirected to the home
               page.
             </p>

@@ -1,6 +1,5 @@
-import { mockIdeas, mockFeedback, mockDashboard } from "@/mocks/data";
+import { mockIdeas, mockFeedback } from "@/mocks/data";
 import {
-  type Idea,
   type CreateIdeaPayload,
   type FeedbackPayload,
   type DashboardData,
@@ -9,7 +8,7 @@ import {
 // In-memory storage for mock data
 let ideasStore = [...mockIdeas];
 let feedbackStore = [...mockFeedback];
-let creatorTokenMap: Record<string, string> = {
+const creatorTokenMap: Record<string, string> = {
   "idea-1": "demo-token-123",
 };
 

@@ -332,6 +332,7 @@ export default function CreateIdea() {
                   </button>
                 </div>
                 <p className="text-xs text-muted-foreground mt-2">
+                  {/* eslint-disable-next-line react/no-unescaped-entities */}
                   Save this link - you'll need it to access your dashboard
                 </p>
               </div>

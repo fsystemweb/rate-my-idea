@@ -118,7 +118,8 @@ Client-specific scripts (added):
 
 - `format:client` - Run Prettier.
 - `format:client:check` - Run Prettier in check mode.
-- `test:client` - test.
+- `test:client` - Run test.
+- `lint:client` - Run eslint.
 
 Run them with npm, e.g. `npm run dev`.
 
