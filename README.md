@@ -1,89 +1,48 @@
-# Rate My Idea
+<h1 align="center">Rate my Idea</h1>
 
+<p align="center">
+  <img src="public/logo.png" alt="logo" width="120px" height="120px"/>
+  <br>
+  <em>Collect anonymous feedback on ideas, products, or events through conversational forms. </br>
+  Get real-time analysis, visual dashboards, and trending insights, no user tracking.</em>
+  <br>
+</p>
 
-A small full-stack Vite + React + Express project for collecting and rating ideas. This repo contains a client (React + TypeScript + Vite) and a server (Express + MongoDB) with routes for ideas and feedback, plus a mock API for local development.
+<p align="center">
+  <a href="https://ratemyidea.us/"><strong>ratemyidea.us</strong></a>
+  <br>
+</p>
 
-## Table of contents
+<p align="center">
+  <a href="CONTRIBUTING.md">Contributing Guidelines</a>
+  ·
+  <a href="https://github.com/fsystemweb/rate-my-idea/issues">Submit an Issue</a>
+  <br>
+  <br>
+</p>
 
-- What is this
-- Features
-- Tech stack
-- Quickstart
-- Environment variables
-- Useful scripts
-- Project structure
-- Contributing
-- License
+<hr>
 
-## What is this
+## Development Setup
 
-Rate My Idea is an example application for submitting ideas and collecting feedback. The project includes a responsive UI in `client/` and a lightweight Express server in `server/` that persists data to MongoDB.
+### Prerequisites:
 
-## Features
-
-- Submit, update and delete ideas
-- Leave feedback for ideas
-- Simple dashboard endpoints for idea analytics
-- Mock API support for development
-
-## Tech stack
-
-- Frontend: React + TypeScript + Vite
-- UI: Tailwind CSS, Radix UI primitives
-- Backend: Express, MongoDB
-- Tooling: npm, Vitest, Prettier, TypeScript
-
-## Quickstart (local)
-
-Prerequisites:
-
-- Node 18+ (recommended)
+- Node 20 
 - npm (the project uses npm as package manager)
 - A MongoDB instance (optional for using the real server; otherwise runs in mock mode)
 
-Install dependencies:
+### Install dependencies:
 
 ```bash
 npm install
 ```
 
-Run the app in development mode:
+### Run the app in development mode:
 
 ```bash
 npm run dev
 ```
 
-This runs the Vite dev server (see `package.json` scripts). The server code will attempt to connect to MongoDB on first request; if the database is not available the server falls back to mock data mode to keep the UI functional during development.
-
-Build for production:
-
-```bash
-npm run build
-```
-
-Start the built server:
-
-```bash
-npm start
-```
-
-Run tests:
-
-```bash
-npm test
-```
-
-Format code:
-
-```bash
-npm run format.fix
-```
-
-Type check:
-
-```bash
-npm run typecheck
-```
 
 ## Environment variables
 
@@ -101,6 +60,7 @@ Example `.env`:
 MONGODB_URI=mongodb://localhost:27017/rate-my-idea
 PORT=3000
 PING_MESSAGE=hello
+DEV=true (if you want to start without mongodb)
 ```
 
 ## Useful scripts
