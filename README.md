@@ -71,8 +71,8 @@ DEV=true
 Scripts are defined in `package.json`:
 
 - `dev` - Run Vite dev server
-- `build` - Build client and server bundles (`build:client` + `build:server`)
-- `start` - Run the built server (`node dist/server/node-build.mjs`)
+- `build` - Build client and server bundles (`build:client` + `build:api`)
+- `start` - Run the built server (`node dist/api/node-build.mjs`)
 - `test` - Run Vitest
 - `format.fix` - Run Prettier to format code
 - `typecheck` - Run TypeScript compiler
@@ -89,7 +89,7 @@ Run them with npm, e.g. `npm run dev`.
 ## Project structure (high level)
 
 - `client/` - React app (tsx, components, pages, hooks, services)
-- `server/` - Express server, routes, DB connection
+- `api/` - Express server, routes, DB connection
 - `shared/` - Shared utilities or API types used by both client and server
 - `public/` - static resources and hosting helpers
 

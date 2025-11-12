@@ -1,7 +1,7 @@
 import { defineConfig, Plugin } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
-import { createServer } from "./server";
+import { createServer } from "./apps/api";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
@@ -11,7 +11,7 @@ export default defineConfig(({ mode }) => ({
     fs: {
       // Allow Vite to serve files from client, shared and project root (index.html)
       allow: [path.resolve(__dirname, "./client"), path.resolve(__dirname, "./shared"), path.resolve(__dirname, ".")],
-      deny: [".env", ".env.*", "*.{crt,pem}", "**/.git/**", "server/**"],
+      deny: [".env", ".env.*", "*.{crt,pem}", "**/.git/**", "api/**"],
     },
   },
   build: {
