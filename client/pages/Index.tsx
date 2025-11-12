@@ -9,16 +9,21 @@ export default function Index() {
   const [isLoading, setIsLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
   const [page, setPage] = useState(1);
-  // prettier-ignore
-  {/* eslint-disable-next-line */}
-  const [error, setError] = useState<string | null>(null); // TODO: Fix this
+  const [error, setError] = useState<string | null>(null);
+
   const observerTarget = useRef<HTMLDivElement>(null);
+  const hasInitialLoad = useRef(false);
+  const loadingPage = useRef<number | null>(null); // ← Tracks which page is loading
 
   const loadMore = useCallback(async () => {
-    if (isLoading || !hasMore) return;
+    // Prevent multiple calls for the same page
+    if (isLoading || !hasMore || loadingPage.current === page) return;
+
+    loadingPage.current = page; // Mark this page as loading
 
     setIsLoading(true);
     setError(null);
+
     try {
       const result = await api.getPublicIdeas(page);
       setIdeas((prev) => [...prev, ...result.ideas]);
@@ -29,21 +34,27 @@ export default function Index() {
       console.error("Error loading ideas:", err);
     } finally {
       setIsLoading(false);
+      loadingPage.current = null; // Clear when done
     }
   }, [page, isLoading, hasMore]);
 
+  // Initial load — runs exactly once
   useEffect(() => {
-    loadMore();
-  }, []);
+    if (!hasInitialLoad.current) {
+      hasInitialLoad.current = true;
+      loadMore();
+    }
+  }, [loadMore]);
 
+  // Infinite scroll observer
   useEffect(() => {
     const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting && hasMore && !isLoading) {
+      ([entry]) => {
+        if (entry.isIntersecting && hasMore && !isLoading) {
           loadMore();
         }
       },
-      { threshold: 0.1 },
+      { threshold: 0.1 }
     );
 
     if (observerTarget.current) {
@@ -83,6 +94,12 @@ export default function Index() {
       {/* Ideas Grid */}
       <div className="container max-w-7xl mx-auto px-4 pb-12">
         <h2 className="text-2xl md:text-3xl font-bold mb-8">Trending Ideas</h2>
+
+        {error && (
+          <div className="mb-6 p-4 bg-destructive/10 border border-destructive rounded-lg text-destructive text-center">
+            {error}
+          </div>
+        )}
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {ideas.map((idea) => (
