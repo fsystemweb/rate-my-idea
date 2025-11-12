@@ -1,15 +1,14 @@
-// vite.config.server.ts
 import { defineConfig } from 'vite'
 import path from 'path'
 
 export default defineConfig({
   build: {
-    outDir: 'dist/server',
+    outDir: 'dist/api',
     emptyOutDir: true,
     lib: {
-      entry: path.resolve(__dirname, 'server/node-build.ts'), // your Express app
+      entry: path.resolve(__dirname, 'api/node-build.ts'),
       formats: ['es'],
-      fileName: () => 'node-build.mjs', // Vercel expects .mjs for ESM
+      fileName: () => 'node-build.mjs',
     },
     target: 'node20',
     ssr: true,
@@ -17,12 +16,9 @@ export default defineConfig({
     sourcemap: true,
     rollupOptions: {
       external: [
-        // Node.js built-ins (never bundle)
         'fs', 'path', 'url', 'http', 'https', 'os', 'crypto',
         'stream', 'util', 'events', 'buffer', 'querystring',
         'child_process', 'zlib', 'net', 'tls', 'dns', 'punycode',
-
-        // Your runtime dependencies (installed on Vercel)
         'express',
         'cors',
         'serverless-http',
@@ -34,7 +30,7 @@ export default defineConfig({
       output: {
         format: 'es',
         entryFileNames: '[name].mjs',
-        chunkFileNames: '[name]-[hash].mjs',
+        dir: 'dist/api'
       },
     },
   },
