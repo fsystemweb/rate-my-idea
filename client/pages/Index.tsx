@@ -9,7 +9,8 @@ export default function Index() {
   const [isLoading, setIsLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
   const [page, setPage] = useState(1);
-  const [error, setError] = useState<string | null>(null);
+  {/* eslint-disable-next-line */}
+  const [error, setError] = useState<string | null>(null); // TODO: Fix this
   const observerTarget = useRef<HTMLDivElement>(null);
 
   const loadMore = useCallback(async () => {

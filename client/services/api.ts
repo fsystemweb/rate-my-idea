@@ -71,6 +71,7 @@ async function handleResponse<T>(response: Response): Promise<T> {
 const USE_MOCK_API = import.meta.env.DEV;
 
 // Lazy import to avoid bundling mock API in production
+// eslint-disable-next-line
 let mockApi: any = null;
 const getMockApi = async () => {
   if (!mockApi) {

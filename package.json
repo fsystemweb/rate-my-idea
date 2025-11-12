@@ -21,6 +21,7 @@
     "format:client": "prettier --write client/",
     "format:client:check": "prettier --check client/",
     "test:client": "vitest run client",
+    "lint:client": "npx eslint client/ --ext .ts,.tsx,.js,.jsx --max-warnings=0",
     "typecheck": "tsc"
   },
   "dependencies": {
@@ -106,6 +107,12 @@
     "three": "^0.176.0",
     "tsx": "^4.20.3",
     "typescript": "^5.9.2",
+    "eslint": "^9.39.1",
+    "@typescript-eslint/parser": "^6.9.0",
+    "@typescript-eslint/eslint-plugin": "^6.9.0",
+    "eslint-plugin-react": "^7.33.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-jsx-a11y": "^6.7.1",
     "vaul": "^1.1.2",
     "vite": "^7.1.2",
     "vitest": "^3.2.4"
