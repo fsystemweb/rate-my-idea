@@ -4,7 +4,7 @@
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "/api/node-build.mjs"
+      "dest": "/api/index.mjs"
     },
     {
       "src": "/(.*)",

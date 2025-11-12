@@ -6,9 +6,9 @@ export default defineConfig({
     outDir: 'dist/api',
     emptyOutDir: true,
     lib: {
-      entry: path.resolve(__dirname, '/apps/api/node-build.ts'),
+      entry: path.resolve(__dirname, '/apps/api/index.ts'),
       formats: ['es'],
-      fileName: () => 'node-build.mjs',
+      fileName: () => 'index.mjs',
     },
     target: 'node20',
     ssr: true,

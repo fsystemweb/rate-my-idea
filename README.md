@@ -72,7 +72,7 @@ Scripts are defined in `package.json`:
 
 - `dev` - Run Vite dev server
 - `build` - Build client and server bundles (`build:client` + `build:api`)
-- `start` - Run the built server (`node dist/api/node-build.mjs`)
+- `start` - Run the built server (`node dist/api/index.mjs`)
 - `test` - Run Vitest
 - `format.fix` - Run Prettier to format code
 - `typecheck` - Run TypeScript compiler
