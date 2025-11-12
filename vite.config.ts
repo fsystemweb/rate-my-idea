@@ -10,8 +10,8 @@ export default defineConfig(({ mode }) => ({
     port: 8080,
     fs: {
       // Allow Vite to serve files from client, shared and project root (index.html)
-      allow: [path.resolve(__dirname, "./client"), path.resolve(__dirname, "./shared"), path.resolve(__dirname, ".")],
-      deny: [".env", ".env.*", "*.{crt,pem}", "**/.git/**", "api/**"],
+      allow: [path.resolve(__dirname, "./apps/client"), path.resolve(__dirname, "./apps/shared"), path.resolve(__dirname, ".")],
+      deny: [".env", ".env.*", "*.{crt,pem}", "**/.git/**", "/apps/api/**"],
     },
   },
   build: {
@@ -20,8 +20,8 @@ export default defineConfig(({ mode }) => ({
   plugins: [react(), expressPlugin()],
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "./client"),
-      "@shared": path.resolve(__dirname, "./shared"),
+      "@": path.resolve(__dirname, "./apps/client"),
+      "@shared": path.resolve(__dirname, "./apps/shared"),
     },
   },
 }));

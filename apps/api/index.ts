@@ -3,7 +3,6 @@ import express from "express";
 import cors from "cors";
 import serverless from "serverless-http";
 import { connectDB, closeDB } from "./db";
-import { handleDemo } from "./routes/demo";
 import * as ideasRoutes from "./routes/ideas";
 import * as feedbackRoutes from "./routes/feedback";
 
@@ -44,7 +43,6 @@ export function createServer() {
     res.json({ message: ping });
   });
 
-  app.get("/api/demo", handleDemo);
 
   // Ideas routes
   app.post("/api/ideas", ideasRoutes.createIdea);
