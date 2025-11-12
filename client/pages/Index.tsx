@@ -9,45 +9,65 @@ export default function Index() {
   const [isLoading, setIsLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
   const [page, setPage] = useState(1);
-  // prettier-ignore
-  {/* eslint-disable-next-line */}
-  const [error, setError] = useState<string | null>(null); // TODO: Fix this
+  const [error, setError] = useState<string | null>(null);
+
   const observerTarget = useRef<HTMLDivElement>(null);
+  const hasInitialLoad = useRef(false);
+  const loadingPage = useRef<number | null>(null);
 
   const loadMore = useCallback(async () => {
-    if (isLoading || !hasMore) return;
+    if (isLoading || !hasMore || loadingPage.current === page) return;
 
+    loadingPage.current = page;
     setIsLoading(true);
     setError(null);
+
     try {
       const result = await api.getPublicIdeas(page);
+
+      if (result.ideas.length === 0) {
+        setHasMore(false);
+        return;
+      }
+
       setIdeas((prev) => [...prev, ...result.ideas]);
       setHasMore(result.pagination.hasMore);
       setPage((prev) => prev + 1);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to load ideas");
-      console.error("Error loading ideas:", err);
+      console.error(err);
+      setHasMore(false); // Stop infinite loop on error
     } finally {
       setIsLoading(false);
+      loadingPage.current = null;
     }
   }, [page, isLoading, hasMore]);
 
   useEffect(() => {
-    loadMore();
-  }, []);
+    if (!hasInitialLoad.current) {
+      hasInitialLoad.current = true;
+      loadMore();
+    }
+  }, [loadMore]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting && hasMore && !isLoading) {
+      ([entry]) => {
+        if (
+          entry.isIntersecting &&
+          hasMore &&
+          !isLoading &&
+          loadingPage.current === null
+        ) {
           loadMore();
         }
       },
       { threshold: 0.1 },
     );
 
-    if (observerTarget.current) {
-      observer.observe(observerTarget.current);
+    const target = observerTarget.current;
+    if (target && hasMore) {
+      observer.observe(target);
     }
 
     return () => observer.disconnect();
@@ -84,6 +104,24 @@ export default function Index() {
       <div className="container max-w-7xl mx-auto px-4 pb-12">
         <h2 className="text-2xl md:text-3xl font-bold mb-8">Trending Ideas</h2>
 
+        {error && (
+          <div className="mb-6 p-4 bg-destructive/10 border border-destructive rounded-lg text-destructive text-center">
+            {error}
+            <button
+              onClick={loadMore}
+              className="mt-2 underline hover:text-destructive-foreground"
+            >
+              Retry
+            </button>
+          </div>
+        )}
+
+        {ideas.length === 0 && !isLoading && !error && (
+          <p className="text-center text-muted-foreground py-12">
+            No ideas yet. Be the first to share!
+          </p>
+        )}
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {ideas.map((idea) => (
             <Link
@@ -100,7 +138,6 @@ export default function Index() {
                 </p>
 
                 <div className="space-y-4 pt-4 border-t border-border">
-                  {/* Rating */}
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       <div className="flex">
@@ -122,7 +159,6 @@ export default function Index() {
                     <span className="text-xs text-muted-foreground">/10</span>
                   </div>
 
-                  {/* Stats */}
                   <div className="flex items-center justify-between text-sm">
                     <div className="flex items-center gap-1 text-muted-foreground">
                       <MessageCircle className="w-4 h-4" />
@@ -139,7 +175,6 @@ export default function Index() {
           ))}
         </div>
 
-        {/* Infinite Scroll Trigger */}
         <div
           ref={observerTarget}
           className="flex justify-center items-center py-12"
