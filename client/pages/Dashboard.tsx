@@ -124,9 +124,7 @@ export default function Dashboard() {
       count: item.count,
     }),
   );
-  {
-    /* eslint-disable-next-line */
-  }
+  {/* eslint-disable-next-line */}
   const sentimentData = analytics.sentimentBreakdown.map((item: any) => ({
     // TODO: Fix this
     name:
@@ -144,9 +142,7 @@ export default function Dashboard() {
           : "#6b7280",
   }));
 
-  {
-    /* eslint-disable-next-line */
-  }
+  {/* eslint-disable-next-line */}
   const timeSeriesData = analytics.feedbackTimeSeries.map((item: any) => ({
     // TODO: Fix this
     date: new Date(item._id).toLocaleDateString("en-US", {
