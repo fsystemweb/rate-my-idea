@@ -15,7 +15,7 @@
     "build": "npm run build:client && npm run build:api",
     "build:client": "vite build",
     "build:api": "vite build --config vite.config.server.ts",
-    "start": "node dist/api/node-build.mjs",
+    "start": "node dist/api/index.mjs",
     "test": "vitest --run",
     "format.fix": "prettier --write .",
     "format:client": "prettier --write client/",
