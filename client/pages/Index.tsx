@@ -25,7 +25,6 @@ export default function Index() {
     try {
       const result = await api.getPublicIdeas(page);
 
-      // ---- stop when we get an empty page ----
       if (result.ideas.length === 0) {
         setHasMore(false);
         return;
@@ -37,13 +36,13 @@ export default function Index() {
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to load ideas");
       console.error(err);
+      setHasMore(false); // Stop infinite loop on error
     } finally {
       setIsLoading(false);
       loadingPage.current = null;
     }
   }, [page, isLoading, hasMore]);
 
-  // ---- INITIAL LOAD (once) ----
   useEffect(() => {
     if (!hasInitialLoad.current) {
       hasInitialLoad.current = true;
@@ -51,7 +50,6 @@ export default function Index() {
     }
   }, [loadMore]);
 
-  // ---- INFINITE SCROLL OBSERVER ----
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -109,6 +107,12 @@ export default function Index() {
         {error && (
           <div className="mb-6 p-4 bg-destructive/10 border border-destructive rounded-lg text-destructive text-center">
             {error}
+            <button
+              onClick={loadMore}
+              className="mt-2 underline hover:text-destructive-foreground"
+            >
+              Retry
+            </button>
           </div>
         )}
 
@@ -171,7 +175,6 @@ export default function Index() {
           ))}
         </div>
 
-        {/* Loader / End message */}
         <div
           ref={observerTarget}
           className="flex justify-center items-center py-12"
