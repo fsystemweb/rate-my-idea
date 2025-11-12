@@ -124,6 +124,7 @@ export default function Dashboard() {
       count: item.count,
     }),
   );
+  // prettier-ignore
   {/* eslint-disable-next-line */}
   const sentimentData = analytics.sentimentBreakdown.map((item: any) => ({
     // TODO: Fix this
@@ -141,7 +142,7 @@ export default function Dashboard() {
           ? "#ef4444"
           : "#6b7280",
   }));
-
+  // prettier-ignore
   {/* eslint-disable-next-line */}
   const timeSeriesData = analytics.feedbackTimeSeries.map((item: any) => ({
     // TODO: Fix this
