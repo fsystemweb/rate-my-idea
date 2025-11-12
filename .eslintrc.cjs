@@ -6,9 +6,9 @@ module.exports = {
     es2021: true,
   },
  ignorePatterns: [
-    'client/components/**',
-    'client/dist/**',
-    'client/build/**',
+    'apps/client/components/**',
+    'apps/client/dist/**',
+    'apps/client/build/**',
     "**/*.spec.tsx"
   ],
   parser: '@typescript-eslint/parser',
@@ -29,7 +29,7 @@ module.exports = {
   ],
   overrides: [
     {
-      files: ['client/**/*.{ts,tsx,js,jsx}'],
+      files: ['apps/client/**/*.{ts,tsx,js,jsx}'],
       rules: {
         // project-specific relaxations can go here
       },

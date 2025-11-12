@@ -28,12 +28,12 @@
     /* Path mapping */
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./client/*"],
+      "@/*": ["./apps/client/*"],
       "@shared/*": ["apps/shared/*"]
     }
   },
   "include": [
-    "client/**/*",
+    "apps/client/**/*",
     "apps/api/**/*",
     "apps/shared/**/*",
     "vite.config.ts",
