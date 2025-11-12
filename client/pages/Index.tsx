@@ -54,7 +54,7 @@ export default function Index() {
           loadMore();
         }
       },
-      { threshold: 0.1 }
+      { threshold: 0.1 },
     );
 
     if (observerTarget.current) {
