@@ -18,6 +18,9 @@
     "start": "node dist/server/node-build.mjs",
     "test": "vitest --run",
     "format.fix": "prettier --write .",
+    "format:client": "prettier --write client/",
+    "format:client:check": "prettier --check client/",
+    "test:client": "vitest --run \"client/**/*.spec.*\"",
     "typecheck": "tsc"
   },
   "dependencies": {
