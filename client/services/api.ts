@@ -71,6 +71,7 @@ async function handleResponse<T>(response: Response): Promise<T> {
 const USE_MOCK_API = import.meta.env.DEV;
 
 // Lazy import to avoid bundling mock API in production
+// eslint-disable-next-line
 let mockApi: any = null;
 const getMockApi = async () => {
   if (!mockApi) {
@@ -133,18 +134,21 @@ export const api = {
   async updateIdea(
     id: string,
     creatorToken: string,
-    updates: Partial<CreateIdeaPayload>
+    updates: Partial<CreateIdeaPayload>,
   ) {
     if (USE_MOCK_API) {
       const mock = await getMockApi();
       return mock.updateIdea(id, creatorToken, updates);
     }
 
-    const response = await fetch(`${API_BASE}/ideas/${id}?creatorToken=${creatorToken}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(updates),
-    });
+    const response = await fetch(
+      `${API_BASE}/ideas/${id}?creatorToken=${creatorToken}`,
+      {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(updates),
+      },
+    );
     return handleResponse<Idea>(response);
   },
 
@@ -154,9 +158,12 @@ export const api = {
       return mock.deleteIdea(id, creatorToken);
     }
 
-    const response = await fetch(`${API_BASE}/ideas/${id}?creatorToken=${creatorToken}`, {
-      method: "DELETE",
-    });
+    const response = await fetch(
+      `${API_BASE}/ideas/${id}?creatorToken=${creatorToken}`,
+      {
+        method: "DELETE",
+      },
+    );
     return handleResponse<{ success: boolean; message: string }>(response);
   },
 
@@ -208,7 +215,7 @@ export const api = {
     }
 
     const response = await fetch(
-      `${API_BASE}/ideas/${ideaId}/dashboard?creatorToken=${creatorToken}`
+      `${API_BASE}/ideas/${ideaId}/dashboard?creatorToken=${creatorToken}`,
     );
     return handleResponse<DashboardData>(response);
   },
