@@ -17,6 +17,8 @@
   <a href="CONTRIBUTING.md">Contributing Guidelines</a>
   ·
   <a href="https://github.com/fsystemweb/rate-my-idea/issues">Submit an Issue</a>
+  ·
+  <a href="DEPLOYMENT.md">Deployment</a>
   <br>
   <br>
 </p>
