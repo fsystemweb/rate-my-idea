@@ -82,7 +82,7 @@ export default function Dashboard() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-950 dark:to-slate-900">
+      <div className="min-h-screen ">
         <Header />
         <div className="container max-w-7xl mx-auto px-4 py-12 flex items-center justify-center min-h-[600px]">
           <div className="flex gap-2">
@@ -97,7 +97,7 @@ export default function Dashboard() {
 
   if (error || !data) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-950 dark:to-slate-900">
+      <div className="min-h-screen ">
         <Header />
         <div className="container max-w-7xl mx-auto px-4 py-12">
           <div className="p-6 rounded-lg bg-destructive/10 border border-destructive/30 text-center">
@@ -156,7 +156,7 @@ export default function Dashboard() {
   const shareableLink = `${window.location.origin}/idea/${idea.id}`;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-950 dark:to-slate-900">
+    <div className="min-h-screen ">
       <Header />
 
       <div className="container max-w-7xl mx-auto px-4 py-12">
