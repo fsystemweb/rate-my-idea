@@ -10,9 +10,7 @@ export const Header = () => {
             <div className="bg-primary rounded-lg p-2">
               <Lightbulb className="w-5 h-5 text-primary-foreground" />
             </div>
-            <span className="text-primary">
-              Rate My Idea
-            </span>
+            <span className="text-primary">Rate My Idea</span>
           </Link>
           <Link
             to="/create"

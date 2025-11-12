@@ -6,7 +6,6 @@
 @tailwind utilities;
 
 @layer base {
-
   /**
    * Rate My Idea - Warm Orange Design System
    * Color Palette
@@ -97,7 +96,6 @@
     --sidebar-ring: 24 100% 50%;
   }
 }
-
 
 @layer base {
   * {
