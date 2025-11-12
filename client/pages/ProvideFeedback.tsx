@@ -113,7 +113,7 @@ export default function ProvideFeedback() {
 
       <div className="container max-w-2xl mx-auto px-4 py-12">
         {/* Password Step */}
-        {step === "password" && isPrivateIdea && (
+        {step === "password" && idea?.isPrivate && (
           <div className="max-w-md mx-auto">
             <div className="flex justify-center mb-6">
               <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center">
