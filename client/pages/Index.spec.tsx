@@ -18,9 +18,7 @@ describe("Index Page (Ideas List)", () => {
   });
 
   it("renders the ideas list page", () => {
-    const mockGetPublicIdeas = vi.fn(() =>
-      new Promise(() => {})
-    );
+    const mockGetPublicIdeas = vi.fn(() => new Promise(() => {}));
 
     vi.spyOn(apiModule, "api", "get").mockReturnValue({
       getPublicIdeas: mockGetPublicIdeas,
@@ -187,9 +185,9 @@ describe("Index Page (Ideas List)", () => {
   });
 
   it("handles API errors gracefully", async () => {
-    const mockGetPublicIdeas = vi.fn().mockRejectedValue(
-      new Error("Failed to load ideas")
-    );
+    const mockGetPublicIdeas = vi
+      .fn()
+      .mockRejectedValue(new Error("Failed to load ideas"));
 
     vi.spyOn(apiModule, "api", "get").mockReturnValue({
       getPublicIdeas: mockGetPublicIdeas,

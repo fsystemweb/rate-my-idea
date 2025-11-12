@@ -75,10 +75,10 @@ export default function CreateIdea() {
                     step === s || (step === "password" && s === "type")
                       ? "bg-gradient-to-r from-primary to-secondary text-primary-foreground"
                       : ["info", "type"].includes(step) &&
-                        ["info", "type"].indexOf(s) <
-                          ["info", "type"].indexOf(step)
-                      ? "bg-primary/20 text-primary"
-                      : "bg-muted text-muted-foreground"
+                          ["info", "type"].indexOf(s) <
+                            ["info", "type"].indexOf(step)
+                        ? "bg-primary/20 text-primary"
+                        : "bg-muted text-muted-foreground"
                   }`}
                 >
                   {i + 1}
@@ -248,7 +248,7 @@ export default function CreateIdea() {
               </button>
               <button
                 onClick={handleNextStep}
-                disabled={isPrivate && password.length < 6 || isSubmitting}
+                disabled={(isPrivate && password.length < 6) || isSubmitting}
                 className="flex-1 px-4 py-3 rounded-lg bg-gradient-to-r from-primary to-secondary text-primary-foreground font-semibold disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-lg transition-all"
               >
                 {isSubmitting ? "Creating..." : "Create Idea"}

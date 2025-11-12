@@ -41,7 +41,7 @@ export default function Index() {
           loadMore();
         }
       },
-      { threshold: 0.1 }
+      { threshold: 0.1 },
     );
 
     if (observerTarget.current) {
@@ -117,9 +117,7 @@ export default function Index() {
                         {idea.avgRating.toFixed(1)}
                       </span>
                     </div>
-                    <span className="text-xs text-muted-foreground">
-                      /10
-                    </span>
+                    <span className="text-xs text-muted-foreground">/10</span>
                   </div>
 
                   {/* Stats */}

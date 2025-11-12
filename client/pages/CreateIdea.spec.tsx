@@ -20,7 +20,7 @@ describe("CreateIdea Page", () => {
 
   it("renders the initial form", () => {
     render(<MockCreateIdea />);
-    
+
     // Find title and description inputs
     const inputs = screen.getAllByRole("textbox");
     expect(inputs.length).toBeGreaterThan(0);
@@ -28,28 +28,30 @@ describe("CreateIdea Page", () => {
 
   it("accepts title input", () => {
     render(<MockCreateIdea />);
-    
+
     const inputs = screen.getAllByRole("textbox");
     const titleInput = inputs[0] as HTMLTextAreaElement | HTMLInputElement;
-    
+
     fireEvent.change(titleInput, { target: { value: "My Test Idea" } });
     expect(titleInput.value).toBe("My Test Idea");
   });
 
   it("accepts description input", () => {
     render(<MockCreateIdea />);
-    
+
     const textareas = screen.getAllByRole("textbox");
     if (textareas.length > 1) {
       const descriptionInput = textareas[1] as HTMLTextAreaElement;
-      fireEvent.change(descriptionInput, { target: { value: "My description" } });
+      fireEvent.change(descriptionInput, {
+        target: { value: "My description" },
+      });
       expect(descriptionInput.value).toBe("My description");
     }
   });
 
   it("renders buttons for navigation", () => {
     render(<MockCreateIdea />);
-    
+
     const buttons = screen.getAllByRole("button");
     expect(buttons.length).toBeGreaterThan(0);
   });

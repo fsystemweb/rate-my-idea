@@ -20,9 +20,7 @@ describe("ProvideFeedback Page", () => {
   });
 
   it("renders loading state initially", () => {
-    const mockGetIdeaDetail = vi.fn(() => 
-      new Promise(() => {})
-    );
+    const mockGetIdeaDetail = vi.fn(() => new Promise(() => {}));
 
     vi.spyOn(apiModule, "api", "get").mockReturnValue({
       getIdeaDetail: mockGetIdeaDetail,
@@ -150,9 +148,9 @@ describe("ProvideFeedback Page", () => {
   });
 
   it("handles API errors gracefully", async () => {
-    const mockGetIdeaDetail = vi.fn().mockRejectedValue(
-      new Error("Failed to load idea")
-    );
+    const mockGetIdeaDetail = vi
+      .fn()
+      .mockRejectedValue(new Error("Failed to load idea"));
 
     vi.spyOn(apiModule, "api", "get").mockReturnValue({
       getIdeaDetail: mockGetIdeaDetail,
