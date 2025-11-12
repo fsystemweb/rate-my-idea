@@ -7,7 +7,7 @@ export const Header = () => {
       <div className="container max-w-7xl mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           <Link to="/" className="flex items-center gap-2 font-bold text-xl">
-            <div className="bg-gradient-to-br from-primary to-secondary rounded-lg p-2">
+            <div className="bg-primary rounded-lg p-2">
               <Lightbulb className="w-5 h-5 text-primary-foreground" />
             </div>
             <span className="text-primary">
@@ -16,7 +16,7 @@ export const Header = () => {
           </Link>
           <Link
             to="/create"
-            className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium rounded-lg bg-gradient-to-r from-primary to-secondary text-primary-foreground hover:shadow-lg hover:shadow-primary/25 transition-all"
+            className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium rounded-lg bg-primary text-primary-foreground hover:shadow-lg hover:shadow-primary/25 transition-all"
           >
             Create Idea
           </Link>
