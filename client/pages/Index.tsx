@@ -54,7 +54,7 @@ export default function Index() {
   }, [loadMore, hasMore, isLoading]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-950 dark:to-slate-900">
+    <div className="min-h-screen">
       <Header />
 
       {/* Hero Section */}
@@ -73,7 +73,7 @@ export default function Index() {
           </p>
           <Link
             to="/create"
-            className="inline-flex items-center justify-center px-8 py-4 text-base font-semibold rounded-lg bg-gradient-to-r from-primary to-secondary text-primary-foreground hover:shadow-2xl hover:shadow-primary/30 transition-all transform hover:scale-105"
+            className="inline-flex items-center justify-center px-8 py-4 text-base font-semibold rounded-lg bg-primary text-primary-foreground hover:shadow-2xl hover:shadow-primary/30 transition-all transform hover:scale-105"
           >
             Create Your First Idea
           </Link>
