@@ -11,11 +11,13 @@ import IdeaDetail from "./pages/IdeaDetail";
 import ProvideFeedback from "./pages/ProvideFeedback";
 import Dashboard from "./pages/Dashboard";
 import NotFound from "./pages/NotFound";
+import { Analytics } from "@vercel/analytics/react";
 
 const queryClient = new QueryClient();
 
 export const App = () => (
   <QueryClientProvider client={queryClient}>
+    
     <TooltipProvider>
       <Toaster />
       <Sonner />
@@ -28,6 +30,7 @@ export const App = () => (
           <Route path="/dashboard/:token" element={<Dashboard />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
+        <Analytics />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
