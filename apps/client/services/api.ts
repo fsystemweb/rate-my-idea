@@ -119,11 +119,6 @@ export const api = {
   },
 
   async deleteIdea(id: string, creatorToken: string) {
-    if (USE_MOCK_API) {
-      const mock = await getMockApi();
-      return mock.deleteIdea(id, creatorToken);
-    }
-
     const response = await fetch(
       `${API_BASE}/ideas/${id}?creatorToken=${creatorToken}`,
       {

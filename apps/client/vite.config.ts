@@ -4,7 +4,7 @@ import react from "@vitejs/plugin-react-swc";
 import { resolve } from "path";
 
 export default defineConfig({
-  root: ".",
+  root: __dirname,
   server: {
     host: true,
     port: 8080,
@@ -16,7 +16,24 @@ export default defineConfig({
     },
   },
 
-  build: { outDir: "../../dist/spa", emptyOutDir: true },
+  build: {
+    outDir: "../../dist/spa",
+    emptyOutDir: true,
+    rollupOptions: {
+      external: [
+        "express",
+        "mongodb",
+        "serverless-http",
+        "dotenv",
+        "cors",
+        "bcryptjs",
+        "zod",
+        "body-parser",
+        "on-finished",
+        "raw-body"
+      ],
+    },
+  },
   plugins: [react()],
   resolve: {
     alias: {
@@ -25,6 +42,6 @@ export default defineConfig({
     },
   },
   optimizeDeps: {
-    exclude: ["express", "mongodb", "serverless-http"],
+    exclude: ["express", "mongodb", "serverless-http", "dotenv", "cors", "bcryptjs"],
   },
 });
