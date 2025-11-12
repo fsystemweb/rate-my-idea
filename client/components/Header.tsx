@@ -10,7 +10,7 @@ export const Header = () => {
             <div className="bg-gradient-to-br from-primary to-secondary rounded-lg p-2">
               <Lightbulb className="w-5 h-5 text-primary-foreground" />
             </div>
-            <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+            <span className="text-primary">
               Rate My Idea
             </span>
           </Link>
