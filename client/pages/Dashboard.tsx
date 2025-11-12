@@ -118,12 +118,17 @@ export default function Dashboard() {
 
   const idea = data.idea;
   const analytics = data.analytics;
-  const ratingData = analytics.ratingDistribution.map((item: { _id: number; count: number }) => ({
-    rating: item._id?.toString() || "0",
-    count: item.count,
-  }));
-  {/* eslint-disable-next-line */}
-  const sentimentData = analytics.sentimentBreakdown.map((item: any) => ({ // TODO: Fix this
+  const ratingData = analytics.ratingDistribution.map(
+    (item: { _id: number; count: number }) => ({
+      rating: item._id?.toString() || "0",
+      count: item.count,
+    }),
+  );
+  {
+    /* eslint-disable-next-line */
+  }
+  const sentimentData = analytics.sentimentBreakdown.map((item: any) => ({
+    // TODO: Fix this
     name:
       item._id === "positive"
         ? "Positive"
@@ -139,8 +144,11 @@ export default function Dashboard() {
           : "#6b7280",
   }));
 
-  {/* eslint-disable-next-line */}
-  const timeSeriesData = analytics.feedbackTimeSeries.map((item: any) => ({ // TODO: Fix this
+  {
+    /* eslint-disable-next-line */
+  }
+  const timeSeriesData = analytics.feedbackTimeSeries.map((item: any) => ({
+    // TODO: Fix this
     date: new Date(item._id).toLocaleDateString("en-US", {
       month: "short",
       day: "numeric",
