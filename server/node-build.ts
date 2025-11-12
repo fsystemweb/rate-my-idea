@@ -12,14 +12,11 @@ const __dirname = path.dirname(__filename)
 const distPath = path.join(__dirname, '../../spa') 
 app.use(express.static(distPath))
 
-// Handle SPA routing: serve index.html for all non-API routes
 app.all('*', (req, res, next) => {
-  // Skip API & health routes
   if (req.path.startsWith('/api/') || req.path.startsWith('/health')) {
     return next() // Let Express handle it
   }
 
-  // Serve index.html for client-side routing
   res.sendFile(path.join(distPath, 'index.html'), (err) => {
     if (err) {
       console.error('File send error:', err)
