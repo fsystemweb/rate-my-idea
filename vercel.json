@@ -1,14 +1,14 @@
 {
+  "version": 3,
   "buildCommand": "npm run build",
-  "outputDirectory": "dist",
-  "routes": [
-    {
-      "src": "/api/(.*)",
-      "dest": "/api/index.mjs"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/spa/index.html"
+  "outputDirectory": "dist/spa",
+  "functions": {
+    ".vercel/output/functions/**/*.mjs": {
+      "runtime": "nodejs20"
     }
+  },
+  "rewrites": [
+    { "source": "/api/(.*)", "destination": "/api/index.mjs" },
+    { "source": "/(.*)", "destination": "/index.html" }
   ]
 }

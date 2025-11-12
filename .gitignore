@@ -1,26 +1,64 @@
-# Logs
-logs
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+# Node modules
+node_modules/
+pnpm-lock.yaml
+yarn.lock
+package-lock.json
 
-node_modules
-dist
-dist-ssr
-*.local
+# Build outputs
+dist/
+dist/spa/
+dist/api/
+.vercel/output/
+.vercel_build_output/
+.vercel/
 
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
+# Vite
+.vite/
+.cache/
+*.tsbuildinfo
+
+# TurboRepo
+.turbo/
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+.env.production
+.env.development
+
+# OS / Editor
 .DS_Store
+Thumbs.db
+*.log
+.vscode/
+.idea/
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
 
-.config/
-.env
+# Testing
+coverage/
+*.lcov
+
+# Temporary files
+tmp/
+temp/
+
+# Vercel
 .vercel
+
+# Optional: Ignore large files
+*.zip
+*.tar.gz
+*.rar
+
+# Optional: Ignore IDE settings (uncomment if needed)
+# .vscode/
+# .idea/
+
+# Optional: Ignore OS files
+# .DS_Store
+# Thumbs.db

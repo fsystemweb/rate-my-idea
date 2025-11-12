@@ -67,28 +67,9 @@ async function handleResponse<T>(response: Response): Promise<T> {
   return response.json();
 }
 
-// Use mock API in development mode
-const USE_MOCK_API = import.meta.env.DEV;
-
-// Lazy import to avoid bundling mock API in production
-// eslint-disable-next-line
-let mockApi: any = null;
-const getMockApi = async () => {
-  if (!mockApi) {
-    const { mockApi: api } = await import("./mockApi");
-    mockApi = api;
-  }
-  return mockApi;
-};
-
 export const api = {
   // Ideas
   async createIdea(payload: CreateIdeaPayload) {
-    if (USE_MOCK_API) {
-      const mock = await getMockApi();
-      return mock.createIdea(payload);
-    }
-
     const response = await fetch(`${API_BASE}/ideas`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -104,11 +85,6 @@ export const api = {
   },
 
   async getPublicIdeas(page = 1) {
-    if (USE_MOCK_API) {
-      const mock = await getMockApi();
-      return mock.getPublicIdeas(page);
-    }
-
     const response = await fetch(`${API_BASE}/ideas?page=${page}`);
     return handleResponse<{
       ideas: Idea[];
@@ -122,11 +98,6 @@ export const api = {
   },
 
   async getIdeaDetail(id: string) {
-    if (USE_MOCK_API) {
-      const mock = await getMockApi();
-      return mock.getIdeaDetail(id);
-    }
-
     const response = await fetch(`${API_BASE}/ideas/${id}`);
     return handleResponse<Idea>(response);
   },
@@ -136,11 +107,6 @@ export const api = {
     creatorToken: string,
     updates: Partial<CreateIdeaPayload>,
   ) {
-    if (USE_MOCK_API) {
-      const mock = await getMockApi();
-      return mock.updateIdea(id, creatorToken, updates);
-    }
-
     const response = await fetch(
       `${API_BASE}/ideas/${id}?creatorToken=${creatorToken}`,
       {
@@ -169,11 +135,6 @@ export const api = {
 
   // Feedback
   async submitFeedback(ideaId: string, payload: FeedbackPayload) {
-    if (USE_MOCK_API) {
-      const mock = await getMockApi();
-      return mock.submitFeedback(ideaId, payload);
-    }
-
     const response = await fetch(`${API_BASE}/ideas/${ideaId}/feedback`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -190,11 +151,6 @@ export const api = {
   },
 
   async getFeedback(ideaId: string) {
-    if (USE_MOCK_API) {
-      const mock = await getMockApi();
-      return mock.getFeedback(ideaId);
-    }
-
     const response = await fetch(`${API_BASE}/ideas/${ideaId}/feedback`);
     return handleResponse<{
       feedback: Array<{
@@ -209,11 +165,6 @@ export const api = {
 
   // Dashboard
   async getDashboard(ideaId: string, creatorToken: string) {
-    if (USE_MOCK_API) {
-      const mock = await getMockApi();
-      return mock.getDashboard(ideaId, creatorToken);
-    }
-
     const response = await fetch(
       `${API_BASE}/ideas/${ideaId}/dashboard?creatorToken=${creatorToken}`,
     );
