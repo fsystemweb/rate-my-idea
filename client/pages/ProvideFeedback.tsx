@@ -14,7 +14,7 @@ export default function ProvideFeedback() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword] = useState(false);
   const [passwordError, setPasswordError] = useState("");
   const [rating, setRating] = useState(5);
   const [suggestion, setSuggestion] = useState("");
@@ -68,7 +68,9 @@ export default function ProvideFeedback() {
         navigate("/");
       }, 3000);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to submit feedback");
+      setError(
+        err instanceof Error ? err.message : "Failed to submit feedback",
+      );
       setIsSubmitting(false);
     }
   };
@@ -113,7 +115,7 @@ export default function ProvideFeedback() {
 
       <div className="container max-w-2xl mx-auto px-4 py-12">
         {/* Password Step */}
-        {step === "password" && isPrivateIdea && (
+        {step === "password" && idea?.isPrivate && (
           <div className="max-w-md mx-auto">
             <div className="flex justify-center mb-6">
               <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center">
@@ -145,7 +147,9 @@ export default function ProvideFeedback() {
                   }`}
                 />
                 {passwordError && (
-                  <p className="text-sm text-destructive mt-2">{passwordError}</p>
+                  <p className="text-sm text-destructive mt-2">
+                    {passwordError}
+                  </p>
                 )}
               </div>
 
@@ -180,7 +184,9 @@ export default function ProvideFeedback() {
                 <span className="text-sm font-semibold text-muted-foreground">
                   Not Good
                 </span>
-                <span className="text-3xl font-bold text-primary">{rating}</span>
+                <span className="text-3xl font-bold text-primary">
+                  {rating}
+                </span>
                 <span className="text-sm font-semibold text-muted-foreground">
                   Excellent
                 </span>
@@ -288,17 +294,22 @@ export default function ProvideFeedback() {
 
             <h1 className="text-3xl font-bold mb-2">Thank You!</h1>
             <p className="text-muted-foreground mb-8">
+              {/* eslint-disable-next-line react/no-unescaped-entities */}
               Your feedback has been recorded. You'll be redirected to the home
               page.
             </p>
 
             <div className="space-y-3">
               <p className="text-sm text-muted-foreground">
-                Rating: <span className="font-bold text-foreground">{rating}/10</span>
+                Rating:{" "}
+                <span className="font-bold text-foreground">{rating}/10</span>
               </p>
               {suggestion && (
                 <p className="text-sm text-muted-foreground">
-                  Suggestion recorded: <span className="font-semibold">{suggestion.substring(0, 50)}...</span>
+                  Suggestion recorded:{" "}
+                  <span className="font-semibold">
+                    {suggestion.substring(0, 50)}...
+                  </span>
                 </p>
               )}
             </div>

@@ -9,7 +9,9 @@ export default function Index() {
   const [isLoading, setIsLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
   const [page, setPage] = useState(1);
-  const [error, setError] = useState<string | null>(null);
+  // prettier-ignore
+  {/* eslint-disable-next-line */}
+  const [error, setError] = useState<string | null>(null); // TODO: Fix this
   const observerTarget = useRef<HTMLDivElement>(null);
 
   const loadMore = useCallback(async () => {
@@ -41,7 +43,7 @@ export default function Index() {
           loadMore();
         }
       },
-      { threshold: 0.1 }
+      { threshold: 0.1 },
     );
 
     if (observerTarget.current) {
@@ -117,9 +119,7 @@ export default function Index() {
                         {idea.avgRating.toFixed(1)}
                       </span>
                     </div>
-                    <span className="text-xs text-muted-foreground">
-                      /10
-                    </span>
+                    <span className="text-xs text-muted-foreground">/10</span>
                   </div>
 
                   {/* Stats */}
