@@ -54,7 +54,6 @@ Important variables:
 
 - MONGODB_URI - MongoDB connection string (optional for dev; required to use real DB)
 - PORT - Port to run the server on (defaults to 3000 in built server)
-- PING_MESSAGE - Optional message returned by the `/api/ping` endpoint
 - DEV - Optional set true if you want to start without mongodb
 
 Example `.env`:
@@ -62,7 +61,6 @@ Example `.env`:
 ```
 MONGODB_URI=mongodb://localhost:27017/rate-my-idea
 PORT=3000
-PING_MESSAGE=hello
 DEV=true
 ```
 
@@ -70,12 +68,10 @@ DEV=true
 
 Scripts are defined in `package.json`:
 
-- `dev` - Run Vite dev server
-- `build` - Build client and server bundles (`build:client` + `build:server`)
-- `start` - Run the built server (`node dist/server/node-build.mjs`)
+- `dev` - Run client and api dev enviroment
+- `build` - Build client and server bundles (`build:client` + `build:api`)
 - `test` - Run Vitest
 - `format.fix` - Run Prettier to format code
-- `typecheck` - Run TypeScript compiler
 
 Client-specific scripts (added):
 
@@ -89,7 +85,7 @@ Run them with npm, e.g. `npm run dev`.
 ## Project structure (high level)
 
 - `client/` - React app (tsx, components, pages, hooks, services)
-- `server/` - Express server, routes, DB connection
+- `api/` - Express server, routes, DB connection
 - `shared/` - Shared utilities or API types used by both client and server
 - `public/` - static resources and hosting helpers
 
