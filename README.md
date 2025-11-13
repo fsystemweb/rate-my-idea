@@ -71,7 +71,6 @@ Scripts are defined in `package.json`:
 - `dev` - Run client and api dev enviroment
 - `build` - Build client and server bundles (`build:client` + `build:api`)
 - `test` - Run Vitest
-- `format.fix` - Run Prettier to format code
 
 Client-specific scripts (added):
 
@@ -83,10 +82,9 @@ Client-specific scripts (added):
 Run them with npm, e.g. `npm run dev`.
 
 ## Project structure (high level)
-
-- `client/` - React app (tsx, components, pages, hooks, services)
-- `api/` - Express server, routes, DB connection
-- `shared/` - Shared utilities or API types used by both client and server
+- `apps/` - Apps folder container
+  - `client/` - React app (tsx, components, pages, hooks, services)
+  - `api/` - Express server, routes, DB connection
 - `public/` - static resources and hosting helpers
 
 ## Contributing
