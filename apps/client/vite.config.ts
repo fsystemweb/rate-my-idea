@@ -1,7 +1,7 @@
 // apps/client/vite.config.ts
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
-import { resolve } from "path";
+import path, { resolve } from "path";
 
 export default defineConfig({
   root: __dirname,
@@ -35,10 +35,10 @@ export default defineConfig({
     },
   },
   plugins: [react()],
+  publicDir: path.resolve(__dirname, "../../public"),
   resolve: {
     alias: {
       "@": resolve(__dirname, "."),
-      "@shared": resolve(__dirname, "../../apps/shared"),
     },
   },
   optimizeDeps: {
