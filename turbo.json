@@ -3,13 +3,18 @@
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
-      "outputs": [
-        "dist/**"
-      ]
+      "outputs": ["dist/**"]
     },
     "dev": {
       "cache": false,
       "persistent": true
+    },
+    "api": {
+      "outputs": ["dist/api/**"],
+      "env": ["MONGODB_URI"]
+    },
+    "client": {
+      "outputs": ["dist/client/**"]
     }
   }
 }
