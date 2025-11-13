@@ -62,3 +62,5 @@ temp/
 # Optional: Ignore OS files
 # .DS_Store
 # Thumbs.db
+
+/api

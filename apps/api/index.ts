@@ -1,5 +1,8 @@
-// apps/api/index.ts
-import "dotenv/config";
+import dotenv from "dotenv";
+import path from "path";
+const rootEnv = path.resolve(process.cwd(), "..", "..", ".env");
+dotenv.config({ path: rootEnv });
+dotenv.config();
 import express from "express";
 import cors from "cors";
 import { connectDB } from "./db";
@@ -20,7 +23,7 @@ export function createApp() {
         dbReady = true;
         console.log("Database connected");
       } catch (e) {
-        console.warn("DB connection failed → running in mock mode");
+        console.warn("DB connection failed");
       }
     }
     next();
