@@ -1,19 +1,8 @@
 import { describe, it, expect, beforeEach, vi } from "vitest";
 import { api } from "./api";
 
-// Mock mockApi
-vi.mock("./mockApi", () => ({
-  mockApi: {
-    createIdea: vi.fn(),
-    getPublicIdeas: vi.fn(),
-    getIdeaDetail: vi.fn(),
-    updateIdea: vi.fn(),
-    deleteIdea: vi.fn(),
-    submitFeedback: vi.fn(),
-    getFeedback: vi.fn(),
-    getDashboard: vi.fn(),
-  },
-}));
+// Mock global fetch
+global.fetch = vi.fn();
 
 describe("api", () => {
   beforeEach(() => {
@@ -37,14 +26,22 @@ describe("api", () => {
         isPrivate: false,
       };
 
-      vi.mocked(mockApiModule.mockApi.createIdea).mockResolvedValueOnce(
-        mockResponse,
-      );
+      vi.mocked(global.fetch).mockResolvedValueOnce({
+        ok: true,
+        status: 201,
+        json: async () => mockResponse,
+      } as Response);
 
       const result = await api.createIdea(payload);
 
       expect(result).toEqual(mockResponse);
-      expect(mockApiModule.mockApi.createIdea).toHaveBeenCalledWith(payload);
+      expect(global.fetch).toHaveBeenCalledWith(
+        expect.stringContaining("/api/ideas"),
+        expect.objectContaining({
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+        }),
+      );
     });
 
     it("should handle private ideas with password", async () => {
@@ -64,20 +61,24 @@ describe("api", () => {
         isPrivate: true,
       };
 
-      vi.mocked(mockApiModule.mockApi.createIdea).mockResolvedValueOnce(
-        mockResponse,
-      );
+      vi.mocked(global.fetch).mockResolvedValueOnce({
+        ok: true,
+        status: 201,
+        json: async () => mockResponse,
+      } as Response);
 
       const result = await api.createIdea(payload);
 
       expect(result.isPrivate).toBe(true);
-      expect(mockApiModule.mockApi.createIdea).toHaveBeenCalled();
+      expect(global.fetch).toHaveBeenCalled();
     });
 
     it("should throw error on API failure", async () => {
-      vi.mocked(mockApiModule.mockApi.createIdea).mockRejectedValueOnce(
-        new Error("Failed to create idea"),
-      );
+      vi.mocked(global.fetch).mockResolvedValueOnce({
+        ok: false,
+        status: 500,
+        json: async () => ({ error: "Failed to create idea" }),
+      } as Response);
 
       await expect(
         api.createIdea({
@@ -111,15 +112,19 @@ describe("api", () => {
         },
       };
 
-      vi.mocked(mockApiModule.mockApi.getPublicIdeas).mockResolvedValueOnce(
-        mockResponse,
-      );
+      vi.mocked(global.fetch).mockResolvedValueOnce({
+        ok: true,
+        status: 200,
+        json: async () => mockResponse,
+      } as Response);
 
       const result = await api.getPublicIdeas(1);
 
       expect(result.ideas).toHaveLength(1);
       expect(result.pagination.hasMore).toBe(true);
-      expect(mockApiModule.mockApi.getPublicIdeas).toHaveBeenCalledWith(1);
+      expect(global.fetch).toHaveBeenCalledWith(
+        expect.stringContaining("/api/ideas?page=1"),
+      );
     });
 
     it("should fetch first page by default", async () => {
@@ -133,14 +138,18 @@ describe("api", () => {
         },
       };
 
-      vi.mocked(mockApiModule.mockApi.getPublicIdeas).mockResolvedValueOnce(
-        mockResponse,
-      );
+      vi.mocked(global.fetch).mockResolvedValueOnce({
+        ok: true,
+        status: 200,
+        json: async () => mockResponse,
+      } as Response);
 
       const result = await api.getPublicIdeas();
 
       expect(result.ideas).toHaveLength(0);
-      expect(mockApiModule.mockApi.getPublicIdeas).toHaveBeenCalled();
+      expect(global.fetch).toHaveBeenCalledWith(
+        expect.stringContaining("/api/ideas?page=1"),
+      );
     });
   });
 
@@ -157,20 +166,26 @@ describe("api", () => {
         createdBy: "Test User",
       };
 
-      vi.mocked(mockApiModule.mockApi.getIdeaDetail).mockResolvedValueOnce(
-        mockIdea,
-      );
+      vi.mocked(global.fetch).mockResolvedValueOnce({
+        ok: true,
+        status: 200,
+        json: async () => mockIdea,
+      } as Response);
 
       const result = await api.getIdeaDetail("123");
 
       expect(result).toEqual(mockIdea);
-      expect(mockApiModule.mockApi.getIdeaDetail).toHaveBeenCalledWith("123");
+      expect(global.fetch).toHaveBeenCalledWith(
+        expect.stringContaining("/api/ideas/123"),
+      );
     });
 
     it("should handle not found error", async () => {
-      vi.mocked(mockApiModule.mockApi.getIdeaDetail).mockRejectedValueOnce(
-        new Error("Idea not found"),
-      );
+      vi.mocked(global.fetch).mockResolvedValueOnce({
+        ok: false,
+        status: 404,
+        json: async () => ({ error: "Idea not found" }),
+      } as Response);
 
       await expect(api.getIdeaDetail("invalid-id")).rejects.toThrow(
         "Idea not found",
@@ -195,17 +210,20 @@ describe("api", () => {
         isPrivate: false,
       };
 
-      vi.mocked(mockApiModule.mockApi.updateIdea).mockResolvedValueOnce(
-        mockResponse,
-      );
+      vi.mocked(global.fetch).mockResolvedValueOnce({
+        ok: true,
+        status: 200,
+        json: async () => mockResponse,
+      } as Response);
 
       const result = await api.updateIdea("123", "creator-token", updates);
 
       expect(result).toEqual(mockResponse);
-      expect(mockApiModule.mockApi.updateIdea).toHaveBeenCalledWith(
-        "123",
-        "creator-token",
-        updates,
+      expect(global.fetch).toHaveBeenCalledWith(
+        expect.stringContaining("/api/ideas/123?creatorToken=creator-token"),
+        expect.objectContaining({
+          method: "PUT",
+        }),
       );
     });
   });
@@ -217,16 +235,20 @@ describe("api", () => {
         message: "Idea deleted successfully",
       };
 
-      vi.mocked(mockApiModule.mockApi.deleteIdea).mockResolvedValueOnce(
-        mockResponse,
-      );
+      vi.mocked(global.fetch).mockResolvedValueOnce({
+        ok: true,
+        status: 200,
+        json: async () => mockResponse,
+      } as Response);
 
       const result = await api.deleteIdea("123", "creator-token");
 
       expect(result.success).toBe(true);
-      expect(mockApiModule.mockApi.deleteIdea).toHaveBeenCalledWith(
-        "123",
-        "creator-token",
+      expect(global.fetch).toHaveBeenCalledWith(
+        expect.stringContaining("/api/ideas/123?creatorToken=creator-token"),
+        expect.objectContaining({
+          method: "DELETE",
+        }),
       );
     });
   });
@@ -247,16 +269,20 @@ describe("api", () => {
         createdAt: "2024-01-01",
       };
 
-      vi.mocked(mockApiModule.mockApi.submitFeedback).mockResolvedValueOnce(
-        mockResponse,
-      );
+      vi.mocked(global.fetch).mockResolvedValueOnce({
+        ok: true,
+        status: 201,
+        json: async () => mockResponse,
+      } as Response);
 
       const result = await api.submitFeedback("idea-123", payload);
 
       expect(result).toEqual(mockResponse);
-      expect(mockApiModule.mockApi.submitFeedback).toHaveBeenCalledWith(
-        "idea-123",
-        payload,
+      expect(global.fetch).toHaveBeenCalledWith(
+        expect.stringContaining("/api/ideas/idea-123/feedback"),
+        expect.objectContaining({
+          method: "POST",
+        }),
       );
     });
 
@@ -276,9 +302,11 @@ describe("api", () => {
         createdAt: "2024-01-01",
       };
 
-      vi.mocked(mockApiModule.mockApi.submitFeedback).mockResolvedValueOnce(
-        mockResponse,
-      );
+      vi.mocked(global.fetch).mockResolvedValueOnce({
+        ok: true,
+        status: 201,
+        json: async () => mockResponse,
+      } as Response);
 
       const result = await api.submitFeedback("idea-456", payload);
 
@@ -294,29 +322,31 @@ describe("api", () => {
             id: "feedback-1",
             rating: 5,
             feedback: "Excellent!",
-            sentiment: "positive" as const,
+            sentiment: "positive",
             createdAt: "2024-01-01",
           },
           {
             id: "feedback-2",
             rating: 3,
             feedback: "Average",
-            sentiment: "neutral" as const,
+            sentiment: "neutral",
             createdAt: "2024-01-02",
           },
         ],
       };
 
-      vi.mocked(mockApiModule.mockApi.getFeedback).mockResolvedValueOnce(
-        mockResponse,
-      );
+      vi.mocked(global.fetch).mockResolvedValueOnce({
+        ok: true,
+        status: 200,
+        json: async () => mockResponse,
+      } as Response);
 
       const result = await api.getFeedback("idea-123");
 
       expect(result.feedback).toHaveLength(2);
       expect(result.feedback[0].sentiment).toBe("positive");
-      expect(mockApiModule.mockApi.getFeedback).toHaveBeenCalledWith(
-        "idea-123",
+      expect(global.fetch).toHaveBeenCalledWith(
+        expect.stringContaining("/api/ideas/idea-123/feedback"),
       );
     });
   });
@@ -354,17 +384,20 @@ describe("api", () => {
         feedback: [],
       };
 
-      vi.mocked(mockApiModule.mockApi.getDashboard).mockResolvedValueOnce(
-        mockResponse,
-      );
+      vi.mocked(global.fetch).mockResolvedValueOnce({
+        ok: true,
+        status: 200,
+        json: async () => mockResponse,
+      } as Response);
 
       const result = await api.getDashboard("idea-123", "creator-token");
 
       expect(result.idea.id).toBe("idea-123");
       expect(result.analytics.totalFeedback).toBe(42);
-      expect(mockApiModule.mockApi.getDashboard).toHaveBeenCalledWith(
-        "idea-123",
-        "creator-token",
+      expect(global.fetch).toHaveBeenCalledWith(
+        expect.stringContaining(
+          "/api/ideas/idea-123/dashboard?creatorToken=creator-token",
+        ),
       );
     });
   });
