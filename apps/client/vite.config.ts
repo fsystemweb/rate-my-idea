@@ -30,7 +30,7 @@ export default defineConfig({
         "zod",
         "body-parser",
         "on-finished",
-        "raw-body"
+        "raw-body",
       ],
     },
   },
@@ -42,6 +42,13 @@ export default defineConfig({
     },
   },
   optimizeDeps: {
-    exclude: ["express", "mongodb", "serverless-http", "dotenv", "cors", "bcryptjs"],
+    exclude: [
+      "express",
+      "mongodb",
+      "serverless-http",
+      "dotenv",
+      "cors",
+      "bcryptjs",
+    ],
   },
 });

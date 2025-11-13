@@ -5,7 +5,10 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "prettier": "prettier --write .",
+    "prettier:check": "prettier --check .",
+    "test": "vitest --run"
   },
   "dependencies": {
     "react": "^18.3.1",
