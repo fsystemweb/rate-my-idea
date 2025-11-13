@@ -11,7 +11,10 @@
     "dev:api": "turbo run dev --filter=api",
     "dev:client": "turbo run dev --filter=client",
     "test": "vitest --run",
-    "format.fix": "prettier --write ."
+    "test:client": "cd apps/client && npm run test",
+    "format:client": "prettier --write ./apps/client",
+    "format:client:check": "prettier --check ./apps/client",
+    "lint:client": "turbo run lint --filter=client"
   },
   "workspaces": [
     "apps/*"
