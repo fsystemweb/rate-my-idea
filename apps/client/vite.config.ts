@@ -35,7 +35,7 @@ export default defineConfig({
     },
   },
   plugins: [react()],
-  publicDir: path.resolve(__dirname, '../../public'),
+  publicDir: path.resolve(__dirname, "../../public"),
   resolve: {
     alias: {
       "@": resolve(__dirname, "."),
