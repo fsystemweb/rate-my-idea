@@ -5,7 +5,7 @@ import { resolve } from "path";
 export default defineConfig({
   root: __dirname,
   build: {
-    outDir: "../../api",
+    outDir: "../../dist/api",
     emptyOutDir: false,
     target: "node20",
     ssr: true,

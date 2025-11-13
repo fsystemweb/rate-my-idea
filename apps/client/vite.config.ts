@@ -17,7 +17,7 @@ export default defineConfig({
   },
 
   build: {
-    outDir: "../../dist/spa",
+    outDir: "../../dist/client",
     emptyOutDir: true,
     rollupOptions: {
       external: [
