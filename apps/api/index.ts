@@ -1,20 +1,24 @@
-import dotenv from "dotenv";
 import path from "path";
-const rootEnv = path.resolve(process.cwd(), "..", "..", ".env");
-dotenv.config({ path: rootEnv });
-dotenv.config();
+import dotenv from "dotenv";
 import express from "express";
 import cors from "cors";
+import serverless from "serverless-http";
 import { connectDB } from "./db";
 import * as ideasRoutes from "./routes/ideas";
 import * as feedbackRoutes from "./routes/feedback";
+
+if (!process.env.DEV) {
+  const envPath = path.resolve(process.cwd(), "../../.env");
+  dotenv.config({ path: envPath });
+}else{
+  dotenv.config({ path: path.resolve(process.cwd(), ".env") });
+}
 
 export function createApp() {
   const app = express();
   app.use(cors());
   app.use(express.json());
 
-  // Lazy DB init
   let dbReady = false;
   app.use(async (req, res, next) => {
     if (!dbReady) {
@@ -23,7 +27,7 @@ export function createApp() {
         dbReady = true;
         console.log("Database connected");
       } catch (e) {
-        console.warn("DB connection failed");
+        console.warn("DB connection failed", e);
       }
     }
     next();
@@ -44,16 +48,5 @@ export function createApp() {
   return app;
 }
 
-// === VERCEL HANDLER (only exported) ===
-let _handler: any;
-
-async function vercelHandler(req: any, res: any) {
-  if (!_handler) {
-    const app = createApp();
-    const { default: sls } = await import("serverless-http");
-    _handler = sls(app);
-  }
-  return _handler(req, res);
-}
-
-export default vercelHandler;
+// Default export for Vercel
+export default serverless(createApp());
