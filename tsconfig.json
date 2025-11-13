@@ -32,15 +32,11 @@
       "@/*": [
         "./apps/client/*"
       ],
-      "@shared/*": [
-        "apps/shared/*"
-      ]
     }
   },
   "include": [
     "apps/client/**/*",
     "apps/api/**/*",
-    "apps/shared/**/*",
     "apps/client/vite.config.ts",
     "apps/api/vite.config.ts",
     "apps/models"
