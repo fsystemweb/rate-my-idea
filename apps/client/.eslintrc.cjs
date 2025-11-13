@@ -5,48 +5,43 @@ module.exports = {
     node: true,
     es2021: true,
   },
- ignorePatterns: [
-    'components/**',
-    'dist/**',
-    'build/**',
-    "**/*.spec.tsx"
-  ],
-  parser: '@typescript-eslint/parser',
+  ignorePatterns: ["components/**", "dist/**", "build/**", "**/*.spec.tsx"],
+  parser: "@typescript-eslint/parser",
   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
+    ecmaVersion: "latest",
+    sourceType: "module",
     ecmaFeatures: { jsx: true },
   },
-  plugins: ['@typescript-eslint', 'react', 'react-hooks', 'jsx-a11y'],
+  plugins: ["@typescript-eslint", "react", "react-hooks", "jsx-a11y"],
   settings: {
-    react: { version: 'detect' },
+    react: { version: "detect" },
   },
   extends: [
-    'eslint:recommended',
-    'plugin:@typescript-eslint/recommended',
-    'plugin:react/recommended',
-    'plugin:react-hooks/recommended',
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
   ],
   overrides: [
     {
-      files: ['**/*.{ts,tsx,js,jsx}'],
+      files: ["**/*.{ts,tsx,js,jsx}"],
       rules: {
         // project-specific relaxations can go here
       },
     },
     {
-      files: ['**/*.ts', '**/*.tsx'],
+      files: ["**/*.ts", "**/*.tsx"],
       parserOptions: { project: false },
     },
   ],
   rules: {
-    'no-unused-vars': 'off',
-    '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
     // Disable rule that can crash with newer TypeScript/parser combos in CI
-    '@typescript-eslint/no-unsafe-declaration-merging': 'off',
+    "@typescript-eslint/no-unsafe-declaration-merging": "off",
     // Workaround: disable react-hooks rule that can throw in this environment.
-    'react-hooks/exhaustive-deps': 'off',
+    "react-hooks/exhaustive-deps": "off",
     // New JSX transform: React doesn't need to be in scope for JSX.
-    'react/react-in-jsx-scope': 'off',
+    "react/react-in-jsx-scope": "off",
   },
 };

@@ -4,7 +4,6 @@
     "build": {
       "dependsOn": ["^build"],
       "outputs": [
-        "api/**",
         "dist/**"
       ]
     },
