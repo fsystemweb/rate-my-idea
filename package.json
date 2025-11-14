@@ -9,6 +9,7 @@
     "build:api": "turbo run build --filter=api",
     "dev": "turbo run dev --parallel",
     "dev:api": "turbo run dev --filter=api",
+    "prod:api": "cd apps/api && npm run prod",
     "dev:client": "turbo run dev --filter=client",
     "test": "vitest --run",
     "test:client": "cd apps/client && npm run test",
