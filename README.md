@@ -53,14 +53,14 @@ The server reads configuration from environment variables. Create a `.env` file 
 Important variables:
 
 - MONGODB_URI - MongoDB connection string (optional for dev; required to use real DB)
-- PORT - Port to run the server on (defaults to 3000 in built server)
+- VITE_API_URL - API url for the client webapp
 - DEV - Optional set true if you want to start without mongodb
 
 Example `.env`:
 
 ```
 MONGODB_URI=mongodb://localhost:27017/rate-my-idea
-PORT=3000
+VITE_API_URL=https://api-production-ebe5.up.railway.app/api
 DEV=true
 ```
 
