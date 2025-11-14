@@ -20,6 +20,7 @@ export default defineConfig({
     outDir: "../../dist/client",
     emptyOutDir: true,
     rollupOptions: {
+      input: resolve(__dirname, "index.html"), // Ensure all routes point to index.html
       external: [
         "express",
         "mongodb",
