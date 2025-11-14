@@ -3,7 +3,7 @@
   "outputDirectory": "dist/api",
   "functions": {
     "dist/api/index.mjs": {
-      "runtime": "nodejs20.x"
+      "runtime": "nodejs@20"
     }
   }
 }
