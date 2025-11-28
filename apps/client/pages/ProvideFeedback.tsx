@@ -218,7 +218,7 @@ export default function ProvideFeedback() {
 
             <div className="flex gap-3">
               <button
-                onClick={() => setStep("password")}
+                onClick={() => navigate("/idea/" + ideaId)}
                 className="flex-1 px-4 py-3 rounded-lg border border-border text-foreground hover:bg-muted transition-colors"
               >
                 Back

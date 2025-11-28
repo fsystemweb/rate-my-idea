@@ -17,12 +17,14 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { api, type DashboardData } from "@/services/api";
+import { formatDistanceToNow } from "date-fns/formatDistanceToNow";
 
 export default function Dashboard() {
   const { token } = useParams();
   const navigate = useNavigate();
   const [copied, setCopied] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [showArchiveConfirm, setShowArchiveConfirm] = useState(false);
   const [data, setData] = useState<DashboardData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -36,10 +38,6 @@ export default function Dashboard() {
       }
 
       try {
-        // Extract ideaId from URL or infer from token
-        // For now, we'll need to find the idea by creator token
-        // This requires a new API endpoint or parsing the URL differently
-        // Placeholder: assume ideaId is passed or encoded in token
         const ideaId = new URLSearchParams(window.location.search).get("id");
         if (!ideaId) {
           setError(
@@ -71,6 +69,29 @@ export default function Dashboard() {
       navigate("/");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to delete idea");
+    }
+  };
+
+  const handleArchive = async () => {
+    if (!data?.idea?.id) return;
+
+    try {
+      // Update the idea status to 'archived'
+      await api.updateIdea(data.idea.id, token!, { status: "archived" });
+
+      // Update local state
+      setData((prev) =>
+        prev
+          ? {
+              ...prev,
+              idea: { ...prev.idea, status: "archived" },
+            }
+          : null,
+      );
+
+      setShowArchiveConfirm(false);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to archive idea");
     }
   };
 
@@ -125,7 +146,7 @@ export default function Dashboard() {
     }),
   );
   // prettier-ignore
-  {/* eslint-disable-next-line */}
+  {/* eslint-disable-next-line */ }
   const sentimentData = analytics.sentimentBreakdown.map((item: any) => ({
     // TODO: Fix this
     name:
@@ -143,7 +164,7 @@ export default function Dashboard() {
           : "#6b7280",
   }));
   // prettier-ignore
-  {/* eslint-disable-next-line */}
+  {/* eslint-disable-next-line */ }
   const timeSeriesData = analytics.feedbackTimeSeries.map((item: any) => ({
     // TODO: Fix this
     date: new Date(item._id).toLocaleDateString("en-US", {
@@ -183,7 +204,10 @@ export default function Dashboard() {
                 </>
               )}
             </button>
-            <button className="px-4 py-2 rounded-lg border border-border hover:bg-muted transition-colors flex items-center gap-2">
+            <button
+              onClick={() => setShowArchiveConfirm(true)}
+              className="px-4 py-2 rounded-lg border border-border hover:bg-muted transition-colors flex items-center gap-2"
+            >
               <Archive className="w-4 h-4" />
               Archive
             </button>
@@ -236,7 +260,11 @@ export default function Dashboard() {
               Status
             </p>
             <div className="inline-flex items-center gap-2 text-2xl font-bold">
-              <div className="w-3 h-3 rounded-full bg-green-500 animate-pulse" />
+              {idea.status === "archived" ? (
+                <div className="w-3 h-3 rounded-full bg-muted-foreground" />
+              ) : (
+                <div className="w-3 h-3 rounded-full bg-green-500 animate-pulse" />
+              )}
               <span className="capitalize">{idea.status}</span>
             </div>
             <p className="text-xs text-muted-foreground mt-2">
@@ -400,7 +428,9 @@ export default function Dashboard() {
                     </span>
                   </div>
                   <p className="text-xs text-muted-foreground">
-                    {new Date(suggestion.createdAt).toLocaleDateString()}
+                    {formatDistanceToNow(new Date(suggestion.createdAt), {
+                      addSuffix: true,
+                    })}
                   </p>
                 </div>
               ))
@@ -412,6 +442,33 @@ export default function Dashboard() {
           </div>
         </div>
       </div>
+
+      {/* Archive Confirmation Modal */}
+      {showArchiveConfirm && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <div className="bg-card rounded-xl border border-border p-6 max-w-sm">
+            <h2 className="text-xl font-bold mb-2">Archive Idea?</h2>
+            <p className="text-muted-foreground mb-6">
+              This will hide the idea from public view but keep all data intact.
+              You can unarchive it later if needed.
+            </p>
+            <div className="flex gap-3">
+              <button
+                onClick={() => setShowArchiveConfirm(false)}
+                className="flex-1 px-4 py-2 rounded-lg border border-border text-foreground hover:bg-muted transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleArchive}
+                className="flex-1 px-4 py-2 rounded-lg bg-primary text-primary-foreground hover:opacity-90 transition-opacity"
+              >
+                Archive
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Delete Confirmation Modal */}
       {showDeleteConfirm && (

@@ -15,6 +15,7 @@ export interface CreateIdeaPayload {
   isPrivate: boolean;
   password?: string;
   createdBy?: string;
+  status?: string;
 }
 
 export interface FeedbackPayload {
@@ -57,7 +58,7 @@ export interface DashboardData {
   }>;
 }
 
-const API_BASE =  import.meta.env.VITE_API_URL;
+const API_BASE = import.meta.env.VITE_API_URL;
 
 async function handleResponse<T>(response: Response): Promise<T> {
   if (!response.ok) {
@@ -85,7 +86,9 @@ export const api = {
   },
 
   async getPublicIdeas(page = 1) {
-    const response = await fetch(`${API_BASE}/ideas?page=${page}`);
+    const response = await fetch(
+      `${API_BASE}/ideas?page=${page}&status=active`,
+    );
     return handleResponse<{
       ideas: Idea[];
       pagination: {

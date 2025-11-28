@@ -1,7 +1,9 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Lightbulb } from "lucide-react";
 
 export const Header = () => {
+  const location = useLocation();
+
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container max-w-7xl mx-auto px-4">
@@ -12,12 +14,14 @@ export const Header = () => {
             </div>
             <span className="text-primary">Rate My Idea</span>
           </Link>
-          <Link
-            to="/create"
-            className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium rounded-lg bg-primary text-primary-foreground hover:shadow-lg hover:shadow-primary/25 transition-all"
-          >
-            Create Idea
-          </Link>
+          {location.pathname !== "/create" && (
+            <Link
+              to="/create"
+              className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium rounded-lg bg-primary text-primary-foreground hover:shadow-lg hover:shadow-primary/25 transition-all"
+            >
+              Create Idea
+            </Link>
+          )}
         </div>
       </div>
     </header>
