@@ -60,7 +60,7 @@ Example `.env`:
 
 ```
 MONGODB_URI=mongodb://localhost:27017/rate-my-idea
-VITE_API_URL=https://api-production-ebe5.up.railway.app/api
+VITE_API_URL=https://api.com/api
 DEV=true
 ```
 
