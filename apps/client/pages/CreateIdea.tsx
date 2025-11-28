@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Header } from "@/components/Header";
 import { Copy, Check, Eye, EyeOff } from "lucide-react";
 import { api } from "@/services/api";
+import React from "react";
 
 type Step = "info" | "type" | "password" | "complete";
 
@@ -67,9 +68,9 @@ export default function CreateIdea() {
       <div className="container max-w-2xl mx-auto px-4 py-12">
         {/* Progress Steps */}
         <div className="mb-12">
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between px-24">
             {["info", "type", "complete"].map((s, i) => (
-              <div key={s} className="flex items-center flex-1">
+              <React.Fragment key={s}>
                 <div
                   className={`w-12 h-12 rounded-full flex items-center justify-center font-bold transition-all ${
                     step === s || (step === "password" && s === "type")
@@ -85,7 +86,7 @@ export default function CreateIdea() {
                 </div>
                 {i < 2 && (
                   <div
-                    className={`flex-1 h-1 mx-2 ${
+                    className={`flex-1 h-1 mx-4 ${
                       ["info", "type"].indexOf(step) >
                       ["info", "type"].indexOf(s)
                         ? "bg-primary"
@@ -93,11 +94,10 @@ export default function CreateIdea() {
                     }`}
                   />
                 )}
-              </div>
+              </React.Fragment>
             ))}
           </div>
         </div>
-
         {/* Step: Info */}
         {step === "info" && (
           <div className="space-y-6">
@@ -364,7 +364,7 @@ export default function CreateIdea() {
               </button>
               <button
                 onClick={() => {
-                  copyToClipboard(dashboardLink);
+                  window.location.replace(dashboardLink);
                 }}
                 className="flex-1 px-4 py-3 rounded-lg bg-gradient-to-r from-primary to-secondary text-primary-foreground font-semibold hover:shadow-lg transition-all"
               >

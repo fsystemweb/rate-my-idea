@@ -17,6 +17,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { api, type DashboardData } from "@/services/api";
+import { formatDistanceToNow } from "date-fns/formatDistanceToNow";
 
 export default function Dashboard() {
   const { token } = useParams();
@@ -125,7 +126,7 @@ export default function Dashboard() {
     }),
   );
   // prettier-ignore
-  {/* eslint-disable-next-line */}
+  {/* eslint-disable-next-line */ }
   const sentimentData = analytics.sentimentBreakdown.map((item: any) => ({
     // TODO: Fix this
     name:
@@ -143,7 +144,7 @@ export default function Dashboard() {
           : "#6b7280",
   }));
   // prettier-ignore
-  {/* eslint-disable-next-line */}
+  {/* eslint-disable-next-line */ }
   const timeSeriesData = analytics.feedbackTimeSeries.map((item: any) => ({
     // TODO: Fix this
     date: new Date(item._id).toLocaleDateString("en-US", {
@@ -400,7 +401,9 @@ export default function Dashboard() {
                     </span>
                   </div>
                   <p className="text-xs text-muted-foreground">
-                    {new Date(suggestion.createdAt).toLocaleDateString()}
+                    {formatDistanceToNow(new Date(suggestion.createdAt), {
+                      addSuffix: true,
+                    })}
                   </p>
                 </div>
               ))

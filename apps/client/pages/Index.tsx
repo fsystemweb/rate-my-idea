@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Header } from "@/components/Header";
 import { Star, MessageCircle, CalendarIcon } from "lucide-react";
 import { api, type Idea } from "@/services/api";
+import { formatDistanceToNow } from "date-fns/formatDistanceToNow";
 
 export default function Index() {
   const [ideas, setIdeas] = useState<Idea[]>([]);
@@ -166,7 +167,11 @@ export default function Index() {
                     </div>
                     <div className="flex items-center gap-1 text-muted-foreground">
                       <CalendarIcon className="w-4 h-4" />
-                      <span>{idea.createdAt}</span>
+                      <span>
+                        {formatDistanceToNow(new Date(idea.createdAt), {
+                          addSuffix: true,
+                        })}
+                      </span>
                     </div>
                   </div>
                 </div>
