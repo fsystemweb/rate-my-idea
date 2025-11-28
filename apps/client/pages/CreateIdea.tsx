@@ -60,10 +60,10 @@ export default function CreateIdea() {
   const copyToClipboard = (text: string, type: "dashboard" | "rateLink") => {
     navigator.clipboard.writeText(text);
 
-    if(type === "dashboard") {
+    if (type === "dashboard") {
       setCopiedDashboardLink(true);
       setTimeout(() => setCopiedDashboardLink(false), 2000);
-    }else {
+    } else {
       setCopiedRateLink(true);
       setTimeout(() => setCopiedRateLink(false), 2000);
     }

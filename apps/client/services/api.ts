@@ -86,7 +86,9 @@ export const api = {
   },
 
   async getPublicIdeas(page = 1) {
-    const response = await fetch(`${API_BASE}/ideas?page=${page}&status=active`);
+    const response = await fetch(
+      `${API_BASE}/ideas?page=${page}&status=active`,
+    );
     return handleResponse<{
       ideas: Idea[];
       pagination: {

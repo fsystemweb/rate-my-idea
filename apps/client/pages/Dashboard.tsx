@@ -77,14 +77,18 @@ export default function Dashboard() {
 
     try {
       // Update the idea status to 'archived'
-      await api.updateIdea(data.idea.id, token!, { status: 'archived' });
-      
+      await api.updateIdea(data.idea.id, token!, { status: "archived" });
+
       // Update local state
-      setData(prev => prev ? {
-        ...prev,
-        idea: { ...prev.idea, status: 'archived' }
-      } : null);
-      
+      setData((prev) =>
+        prev
+          ? {
+              ...prev,
+              idea: { ...prev.idea, status: "archived" },
+            }
+          : null,
+      );
+
       setShowArchiveConfirm(false);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to archive idea");
@@ -256,7 +260,7 @@ export default function Dashboard() {
               Status
             </p>
             <div className="inline-flex items-center gap-2 text-2xl font-bold">
-              {idea.status === 'archived' ? (
+              {idea.status === "archived" ? (
                 <div className="w-3 h-3 rounded-full bg-muted-foreground" />
               ) : (
                 <div className="w-3 h-3 rounded-full bg-green-500 animate-pulse" />
