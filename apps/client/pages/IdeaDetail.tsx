@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Header } from "@/components/Header";
 import { Star, MessageCircle, CalendarIcon, Lock, Share2 } from "lucide-react";
 import { api, type Idea } from "@/services/api";
+import { formatDistanceToNow } from "date-fns/formatDistanceToNow";
 
 export default function IdeaDetail() {
   const { ideaId } = useParams();
@@ -110,7 +111,9 @@ export default function IdeaDetail() {
               </div>
               <div className="flex items-center gap-2">
                 <CalendarIcon className="w-4 h-4" />
-                {idea.createdAt}
+                {formatDistanceToNow(new Date(idea.createdAt), {
+                  addSuffix: true,
+                })}
               </div>
               <div className="flex items-center gap-2">
                 <MessageCircle className="w-4 h-4" />
@@ -163,14 +166,14 @@ export default function IdeaDetail() {
               to={`/feedback/${idea.id}`}
               className="flex-1 px-6 py-4 rounded-lg bg-gradient-to-r from-primary to-secondary text-primary-foreground font-semibold text-center hover:shadow-xl transition-all transform hover:scale-105"
             >
-              Share Your Feedback
+              Rate
             </Link>
             <button
               onClick={shareLink}
               className="px-6 py-4 rounded-lg border border-border text-foreground hover:bg-muted transition-colors flex items-center justify-center gap-2"
             >
               <Share2 className="w-5 h-5" />
-              Share
+              Copy Link to Share
             </button>
           </div>
         </article>
