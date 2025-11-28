@@ -4,6 +4,7 @@ import { Header } from "@/components/Header";
 import { Copy, Check, Eye, EyeOff } from "lucide-react";
 import { api } from "@/services/api";
 import React from "react";
+import { el } from "date-fns/locale";
 
 type Step = "info" | "type" | "password" | "complete";
 
@@ -15,7 +16,8 @@ export default function CreateIdea() {
   const [isPrivate, setIsPrivate] = useState(false);
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [copied, setCopied] = useState(false);
+  const [copiedDashboardLink, setCopiedDashboardLink] = useState(false);
+  const [copiedRateLink, setCopiedRateLink] = useState(false);
   const [creatorToken, setCreatorToken] = useState("");
   const [ideaId, setIdeaId] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -55,10 +57,16 @@ export default function CreateIdea() {
   const shareableLink = `${window.location.origin}/idea/${ideaId}`;
   const dashboardLink = `${window.location.origin}/dashboard/${creatorToken}?id=${ideaId}`;
 
-  const copyToClipboard = (text: string) => {
+  const copyToClipboard = (text: string, type: "dashboard" | "rateLink") => {
     navigator.clipboard.writeText(text);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+
+    if(type === "dashboard") {
+      setCopiedDashboardLink(true);
+      setTimeout(() => setCopiedDashboardLink(false), 2000);
+    }else {
+      setCopiedRateLink(true);
+      setTimeout(() => setCopiedRateLink(false), 2000);
+    }
   };
 
   return (
@@ -296,10 +304,10 @@ export default function CreateIdea() {
                     className="flex-1 px-4 py-3 rounded-lg border border-border bg-card text-sm"
                   />
                   <button
-                    onClick={() => copyToClipboard(shareableLink)}
+                    onClick={() => copyToClipboard(shareableLink, "rateLink")}
                     className="px-4 py-3 rounded-lg bg-primary/10 text-primary hover:bg-primary/20 transition-colors"
                   >
-                    {copied ? (
+                    {copiedRateLink ? (
                       <Check className="w-5 h-5" />
                     ) : (
                       <Copy className="w-5 h-5" />
@@ -321,10 +329,10 @@ export default function CreateIdea() {
                     className="flex-1 px-4 py-3 rounded-lg border border-border bg-card text-sm"
                   />
                   <button
-                    onClick={() => copyToClipboard(dashboardLink)}
+                    onClick={() => copyToClipboard(dashboardLink, "dashboard")}
                     className="px-4 py-3 rounded-lg bg-primary/10 text-primary hover:bg-primary/20 transition-colors"
                   >
-                    {copied ? (
+                    {copiedDashboardLink ? (
                       <Check className="w-5 h-5" />
                     ) : (
                       <Copy className="w-5 h-5" />
