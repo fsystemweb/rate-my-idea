@@ -9,6 +9,7 @@ export default function IdeaDetail() {
   const { ideaId } = useParams();
   const navigate = useNavigate();
   const [idea, setIdea] = useState<Idea | null>(null);
+  const [feedbacks, setFeedbacks] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -23,6 +24,9 @@ export default function IdeaDetail() {
       try {
         const ideaData = await api.getIdeaDetail(ideaId);
         setIdea(ideaData);
+        
+        const feedbackData = await api.getFeedback(ideaId);
+        setFeedbacks(feedbackData.feedback);
       } catch (err) {
         setError(err instanceof Error ? err.message : "Failed to load idea");
       } finally {
@@ -178,29 +182,28 @@ export default function IdeaDetail() {
           </div>
         </article>
 
-        {/* Recent Feedback Preview */}
+        {/* Recent Feedback */}
         <div className="mb-8">
           <h2 className="text-2xl font-bold mb-6">Recent Feedback</h2>
           <div className="grid gap-4">
-            {[1, 2, 3].map((i) => (
+            {feedbacks.map((feedback) => (
               <div
-                key={i}
+                key={feedback.id}
                 className="p-6 rounded-lg bg-card border border-border hover:border-primary/30 transition-colors"
               >
                 <div className="flex items-center gap-4 mb-3">
                   <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-primary-foreground font-bold text-sm">
-                    A{i}
+                    A
                   </div>
                   <div>
-                    <p className="font-semibold">Anonymous Feedback #{i}</p>
+                    <p className="font-semibold">Anonymous Feedback</p>
                     <p className="text-sm text-muted-foreground">
-                      Rated {8 - i}/10
+                      Rated {feedback.rating}/10
                     </p>
                   </div>
                 </div>
                 <p className="text-foreground">
-                  This is a sample feedback. In the real app, actual user
-                  feedback would appear here.
+                  {feedback.feedback || 'No feedback provided'}
                 </p>
               </div>
             ))}
