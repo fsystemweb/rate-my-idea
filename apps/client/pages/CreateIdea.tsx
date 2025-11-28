@@ -4,7 +4,6 @@ import { Header } from "@/components/Header";
 import { Copy, Check, Eye, EyeOff } from "lucide-react";
 import { api } from "@/services/api";
 import React from "react";
-import { el } from "date-fns/locale";
 
 type Step = "info" | "type" | "password" | "complete";
 
