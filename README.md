@@ -54,6 +54,7 @@ Important variables:
 
 - MONGODB_URI - MongoDB connection string (optional for dev; required to use real DB)
 - VITE_API_URL - API url for the client webapp
+- VITE_SENTRY_DSN - Sentry DSN
 - DEV - Optional set true if you want to start without mongodb
 
 Example `.env`:
@@ -61,6 +62,7 @@ Example `.env`:
 ```
 MONGODB_URI=mongodb://localhost:27017/rate-my-idea
 VITE_API_URL=https://api.com/api
+VITE_SENTRY_DSN=XXXXXXXXXXXXXXXXXX
 DEV=true
 ```
 
