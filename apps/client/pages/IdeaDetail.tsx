@@ -131,7 +131,7 @@ export default function IdeaDetail() {
             <div className="flex items-center gap-3">
               <div className="flex flex-col">
                 <div className="text-4xl font-bold text-primary">
-                  {idea.avgRating}
+                  {idea.avgRating.toFixed(1)}
                 </div>
                 <div className="text-sm text-muted-foreground">/10</div>
               </div>

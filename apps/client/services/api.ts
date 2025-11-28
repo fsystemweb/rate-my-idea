@@ -15,6 +15,7 @@ export interface CreateIdeaPayload {
   isPrivate: boolean;
   password?: string;
   createdBy?: string;
+  status?: string;
 }
 
 export interface FeedbackPayload {
@@ -85,7 +86,7 @@ export const api = {
   },
 
   async getPublicIdeas(page = 1) {
-    const response = await fetch(`${API_BASE}/ideas?page=${page}`);
+    const response = await fetch(`${API_BASE}/ideas?page=${page}&status=active`);
     return handleResponse<{
       ideas: Idea[];
       pagination: {
