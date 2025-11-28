@@ -1,7 +1,14 @@
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Header } from "@/components/Header";
-import { Star, MessageCircle, CalendarIcon, Lock, Share2, Check } from "lucide-react";
+import {
+  Star,
+  MessageCircle,
+  CalendarIcon,
+  Lock,
+  Share2,
+  Check,
+} from "lucide-react";
 import { api, type Idea } from "@/services/api";
 import { formatDistanceToNow } from "date-fns/formatDistanceToNow";
 
@@ -13,7 +20,6 @@ export default function IdeaDetail() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [copiedRateLink, setCopiedRateLink] = useState(false);
-
 
   useEffect(() => {
     const loadIdea = async () => {
@@ -144,10 +150,11 @@ export default function IdeaDetail() {
                 {[...Array(5)].map((_, i) => (
                   <Star
                     key={i}
-                    className={`w-5 h-5 ${i < Math.round(idea.avgRating / 2)
-                      ? "fill-yellow-400 text-yellow-400"
-                      : "text-muted"
-                      }`}
+                    className={`w-5 h-5 ${
+                      i < Math.round(idea.avgRating / 2)
+                        ? "fill-yellow-400 text-yellow-400"
+                        : "text-muted"
+                    }`}
                   />
                 ))}
               </div>
@@ -180,7 +187,6 @@ export default function IdeaDetail() {
               onClick={shareLink}
               className="px-6 py-4 rounded-lg border border-border text-foreground hover:bg-muted transition-colors flex items-center justify-center gap-2"
             >
-
               {copiedRateLink ? (
                 <>
                   <Check className="w-5 h-5" />
@@ -192,7 +198,6 @@ export default function IdeaDetail() {
                   Copy Link to Share
                 </>
               )}
-
             </button>
           </div>
         </article>
@@ -218,7 +223,7 @@ export default function IdeaDetail() {
                   </div>
                 </div>
                 <p className="text-foreground">
-                  {feedback.feedback || 'No feedback provided'}
+                  {feedback.feedback || "No feedback provided"}
                 </p>
               </div>
             ))}
