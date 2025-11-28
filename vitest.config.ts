@@ -7,14 +7,11 @@ export default defineConfig({
   test: {
     globals: true,
     environment: "jsdom",
-    setupFiles: ["./vitest.setup.ts"],
-  },
-  define: {
-    "import.meta.env.VITE_API_URL": JSON.stringify("http://localhost:3000/api"),
+    setupFiles: ["./apps/client/vitest.setup.ts"],
   },
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "./"),
+      "@": path.resolve(__dirname, "./apps/client/"),
     },
   },
 });
