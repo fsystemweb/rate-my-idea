@@ -1,7 +1,7 @@
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Header } from "@/components/Header";
-import { Star, MessageCircle, CalendarIcon, Lock, Share2 } from "lucide-react";
+import { Star, MessageCircle, CalendarIcon, Lock, Share2, Check } from "lucide-react";
 import { api, type Idea } from "@/services/api";
 import { formatDistanceToNow } from "date-fns/formatDistanceToNow";
 
@@ -12,6 +12,8 @@ export default function IdeaDetail() {
   const [feedbacks, setFeedbacks] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [copiedRateLink, setCopiedRateLink] = useState(false);
+
 
   useEffect(() => {
     const loadIdea = async () => {
@@ -24,7 +26,7 @@ export default function IdeaDetail() {
       try {
         const ideaData = await api.getIdeaDetail(ideaId);
         setIdea(ideaData);
-        
+
         const feedbackData = await api.getFeedback(ideaId);
         setFeedbacks(feedbackData.feedback);
       } catch (err) {
@@ -75,6 +77,9 @@ export default function IdeaDetail() {
 
   const shareLink = () => {
     navigator.clipboard.writeText(window.location.href);
+
+    setCopiedRateLink(true);
+    setTimeout(() => setCopiedRateLink(false), 2000);
   };
 
   return (
@@ -139,11 +144,10 @@ export default function IdeaDetail() {
                 {[...Array(5)].map((_, i) => (
                   <Star
                     key={i}
-                    className={`w-5 h-5 ${
-                      i < Math.round(idea.avgRating / 2)
-                        ? "fill-yellow-400 text-yellow-400"
-                        : "text-muted"
-                    }`}
+                    className={`w-5 h-5 ${i < Math.round(idea.avgRating / 2)
+                      ? "fill-yellow-400 text-yellow-400"
+                      : "text-muted"
+                      }`}
                   />
                 ))}
               </div>
@@ -176,8 +180,19 @@ export default function IdeaDetail() {
               onClick={shareLink}
               className="px-6 py-4 rounded-lg border border-border text-foreground hover:bg-muted transition-colors flex items-center justify-center gap-2"
             >
-              <Share2 className="w-5 h-5" />
-              Copy Link to Share
+
+              {copiedRateLink ? (
+                <>
+                  <Check className="w-5 h-5" />
+                  Copied
+                </>
+              ) : (
+                <>
+                  <Share2 className="w-5 h-5" />
+                  Copy Link to Share
+                </>
+              )}
+
             </button>
           </div>
         </article>
