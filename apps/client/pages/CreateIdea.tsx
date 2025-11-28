@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Header } from "@/components/Header";
 import { Copy, Check, Eye, EyeOff } from "lucide-react";
 import { api } from "@/services/api";
+import React from "react";
 
 type Step = "info" | "type" | "password" | "complete";
 
@@ -14,7 +15,8 @@ export default function CreateIdea() {
   const [isPrivate, setIsPrivate] = useState(false);
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [copied, setCopied] = useState(false);
+  const [copiedDashboardLink, setCopiedDashboardLink] = useState(false);
+  const [copiedRateLink, setCopiedRateLink] = useState(false);
   const [creatorToken, setCreatorToken] = useState("");
   const [ideaId, setIdeaId] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -54,10 +56,16 @@ export default function CreateIdea() {
   const shareableLink = `${window.location.origin}/idea/${ideaId}`;
   const dashboardLink = `${window.location.origin}/dashboard/${creatorToken}?id=${ideaId}`;
 
-  const copyToClipboard = (text: string) => {
+  const copyToClipboard = (text: string, type: "dashboard" | "rateLink") => {
     navigator.clipboard.writeText(text);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+
+    if (type === "dashboard") {
+      setCopiedDashboardLink(true);
+      setTimeout(() => setCopiedDashboardLink(false), 2000);
+    } else {
+      setCopiedRateLink(true);
+      setTimeout(() => setCopiedRateLink(false), 2000);
+    }
   };
 
   return (
@@ -67,9 +75,9 @@ export default function CreateIdea() {
       <div className="container max-w-2xl mx-auto px-4 py-12">
         {/* Progress Steps */}
         <div className="mb-12">
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between px-24">
             {["info", "type", "complete"].map((s, i) => (
-              <div key={s} className="flex items-center flex-1">
+              <React.Fragment key={s}>
                 <div
                   className={`w-12 h-12 rounded-full flex items-center justify-center font-bold transition-all ${
                     step === s || (step === "password" && s === "type")
@@ -85,7 +93,7 @@ export default function CreateIdea() {
                 </div>
                 {i < 2 && (
                   <div
-                    className={`flex-1 h-1 mx-2 ${
+                    className={`flex-1 h-1 mx-4 ${
                       ["info", "type"].indexOf(step) >
                       ["info", "type"].indexOf(s)
                         ? "bg-primary"
@@ -93,11 +101,10 @@ export default function CreateIdea() {
                     }`}
                   />
                 )}
-              </div>
+              </React.Fragment>
             ))}
           </div>
         </div>
-
         {/* Step: Info */}
         {step === "info" && (
           <div className="space-y-6">
@@ -296,10 +303,10 @@ export default function CreateIdea() {
                     className="flex-1 px-4 py-3 rounded-lg border border-border bg-card text-sm"
                   />
                   <button
-                    onClick={() => copyToClipboard(shareableLink)}
+                    onClick={() => copyToClipboard(shareableLink, "rateLink")}
                     className="px-4 py-3 rounded-lg bg-primary/10 text-primary hover:bg-primary/20 transition-colors"
                   >
-                    {copied ? (
+                    {copiedRateLink ? (
                       <Check className="w-5 h-5" />
                     ) : (
                       <Copy className="w-5 h-5" />
@@ -321,10 +328,10 @@ export default function CreateIdea() {
                     className="flex-1 px-4 py-3 rounded-lg border border-border bg-card text-sm"
                   />
                   <button
-                    onClick={() => copyToClipboard(dashboardLink)}
+                    onClick={() => copyToClipboard(dashboardLink, "dashboard")}
                     className="px-4 py-3 rounded-lg bg-primary/10 text-primary hover:bg-primary/20 transition-colors"
                   >
-                    {copied ? (
+                    {copiedDashboardLink ? (
                       <Check className="w-5 h-5" />
                     ) : (
                       <Copy className="w-5 h-5" />
@@ -364,7 +371,7 @@ export default function CreateIdea() {
               </button>
               <button
                 onClick={() => {
-                  copyToClipboard(dashboardLink);
+                  window.location.replace(dashboardLink);
                 }}
                 className="flex-1 px-4 py-3 rounded-lg bg-gradient-to-r from-primary to-secondary text-primary-foreground font-semibold hover:shadow-lg transition-all"
               >

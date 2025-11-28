@@ -9,6 +9,9 @@ export default defineConfig({
     environment: "jsdom",
     setupFiles: ["./vitest.setup.ts"],
   },
+  define: {
+    "import.meta.env.VITE_API_URL": JSON.stringify("http://localhost:3000/api"),
+  },
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./"),
