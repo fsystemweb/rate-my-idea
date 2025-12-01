@@ -100,8 +100,11 @@ export const api = {
     }>(response);
   },
 
-  async getIdeaDetail(id: string) {
-    const response = await fetch(`${API_BASE}/ideas/${id}`);
+  async getIdeaDetail(id: string, password?: string) {
+    const url = password
+      ? `${API_BASE}/ideas/${id}?password=${encodeURIComponent(password)}`
+      : `${API_BASE}/ideas/${id}`;
+    const response = await fetch(url);
     return handleResponse<Idea>(response);
   },
 
@@ -148,8 +151,11 @@ export const api = {
     }>(response);
   },
 
-  async getFeedback(ideaId: string) {
-    const response = await fetch(`${API_BASE}/ideas/${ideaId}/feedback`);
+  async getFeedback(ideaId: string, password?: string) {
+    const url = password
+      ? `${API_BASE}/ideas/${ideaId}/feedback?password=${encodeURIComponent(password)}`
+      : `${API_BASE}/ideas/${ideaId}/feedback`;
+    const response = await fetch(url);
     return handleResponse<{
       feedback: Array<{
         id: string;

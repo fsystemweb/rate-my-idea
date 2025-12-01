@@ -45,16 +45,18 @@ describe("IdeaDetail Page", () => {
     };
 
     const mockGetIdeaDetail = vi.fn().mockResolvedValue(mockIdea);
+    const mockGetFeedback = vi.fn().mockResolvedValue({ feedback: [] });
 
     vi.spyOn(apiModule, "api", "get").mockReturnValue({
       getIdeaDetail: mockGetIdeaDetail,
+      getFeedback: mockGetFeedback,
     } as any);
 
     window.history.pushState({}, "", "/idea/123");
     render(<MockIdeaDetail />);
 
     await waitFor(() => {
-      expect(mockGetIdeaDetail).toHaveBeenCalledWith("123");
+      expect(mockGetIdeaDetail).toHaveBeenCalledWith("123", undefined);
     });
   });
 
@@ -115,16 +117,18 @@ describe("IdeaDetail Page", () => {
     };
 
     const mockGetIdeaDetail = vi.fn().mockResolvedValue(mockIdea);
+    const mockGetFeedback = vi.fn().mockResolvedValue({ feedback: [] });
 
     vi.spyOn(apiModule, "api", "get").mockReturnValue({
       getIdeaDetail: mockGetIdeaDetail,
+      getFeedback: mockGetFeedback,
     } as any);
 
     window.history.pushState({}, "", "/idea/123");
     render(<MockIdeaDetail />);
 
     await waitFor(() => {
-      expect(mockGetIdeaDetail).toHaveBeenCalledWith("123");
+      expect(mockGetIdeaDetail).toHaveBeenCalledWith("123", undefined);
     });
   });
 

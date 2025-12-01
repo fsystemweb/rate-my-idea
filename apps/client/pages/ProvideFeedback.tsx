@@ -1,21 +1,20 @@
 import { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 import { Header } from "@/components/Header";
-import { Lock, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { api, type Idea } from "@/services/api";
 
-type Step = "password" | "rating" | "suggestion" | "complete";
+type Step = "rating" | "suggestion" | "complete";
 
 export default function ProvideFeedback() {
   const { ideaId } = useParams();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const [step, setStep] = useState<Step>("rating");
   const [idea, setIdea] = useState<Idea | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [password, setPassword] = useState("");
-  const [showPassword] = useState(false);
-  const [passwordError, setPasswordError] = useState("");
+  const password = searchParams.get("password") || "";
   const [rating, setRating] = useState(5);
   const [suggestion, setSuggestion] = useState("");
   const [submitted, setSubmitted] = useState(false);
@@ -30,10 +29,8 @@ export default function ProvideFeedback() {
       }
 
       try {
-        const ideaData = await api.getIdeaDetail(ideaId);
+        const ideaData = await api.getIdeaDetail(ideaId, password || undefined);
         setIdea(ideaData);
-        // If idea is private, start with password step; otherwise rating step
-        setStep(ideaData.isPrivate ? "password" : "rating");
       } catch (err) {
         setError(err instanceof Error ? err.message : "Failed to load idea");
       } finally {
@@ -42,16 +39,7 @@ export default function ProvideFeedback() {
     };
 
     loadIdea();
-  }, [ideaId]);
-
-  const handlePasswordSubmit = () => {
-    if (!password.trim()) {
-      setPasswordError("Please enter the password");
-      return;
-    }
-    setPasswordError("");
-    setStep("rating");
-  };
+  }, [ideaId, password]);
 
   const handleSubmitFeedback = async () => {
     if (!ideaId) return;
@@ -66,7 +54,7 @@ export default function ProvideFeedback() {
       setSubmitted(true);
       setTimeout(() => {
         navigate("/");
-      }, 3000);
+      }, 1500);
     } catch (err) {
       setError(
         err instanceof Error ? err.message : "Failed to submit feedback",
@@ -114,64 +102,6 @@ export default function ProvideFeedback() {
       <Header />
 
       <div className="container max-w-2xl mx-auto px-4 py-12">
-        {/* Password Step */}
-        {step === "password" && idea?.isPrivate && (
-          <div className="max-w-md mx-auto">
-            <div className="flex justify-center mb-6">
-              <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center">
-                <Lock className="w-8 h-8 text-primary" />
-              </div>
-            </div>
-
-            <h1 className="text-2xl font-bold text-center mb-2">
-              This Idea is Private
-            </h1>
-            <p className="text-center text-muted-foreground mb-8">
-              Enter the password to provide feedback
-            </p>
-
-            <div className="space-y-4">
-              <div>
-                <input
-                  type={showPassword ? "text" : "password"}
-                  value={password}
-                  onChange={(e) => {
-                    setPassword(e.target.value);
-                    setPasswordError("");
-                  }}
-                  placeholder="Enter password"
-                  className={`w-full px-4 py-3 rounded-lg border-2 bg-card focus:outline-none transition-all ${
-                    passwordError
-                      ? "border-destructive focus:ring-2 focus:ring-destructive"
-                      : "border-border focus:border-primary focus:ring-2 focus:ring-primary"
-                  }`}
-                />
-                {passwordError && (
-                  <p className="text-sm text-destructive mt-2">
-                    {passwordError}
-                  </p>
-                )}
-              </div>
-
-              <button
-                onClick={handlePasswordSubmit}
-                disabled={isSubmitting}
-                className="w-full px-4 py-3 rounded-lg bg-gradient-to-r from-primary to-secondary text-primary-foreground font-semibold hover:shadow-lg transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                Continue
-                <ArrowRight className="w-4 h-4" />
-              </button>
-
-              <button
-                onClick={() => navigate("/")}
-                className="w-full px-4 py-3 rounded-lg border border-border text-foreground hover:bg-muted transition-colors"
-              >
-                Back
-              </button>
-            </div>
-          </div>
-        )}
-
         {/* Rating Step */}
         {step === "rating" && !submitted && (
           <div className="max-w-2xl mx-auto">
@@ -218,7 +148,11 @@ export default function ProvideFeedback() {
 
             <div className="flex gap-3">
               <button
-                onClick={() => navigate("/idea/" + ideaId)}
+                onClick={() =>
+                  navigate(
+                    `/idea/${ideaId}${password ? `?password=${encodeURIComponent(password)}` : ""}`,
+                  )
+                }
                 className="flex-1 px-4 py-3 rounded-lg border border-border text-foreground hover:bg-muted transition-colors"
               >
                 Back
