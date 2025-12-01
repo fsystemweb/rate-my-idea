@@ -182,41 +182,45 @@ export default function Dashboard() {
 
       <div className="container max-w-7xl mx-auto px-4 py-12">
         {/* Header */}
-        <div className="flex justify-between items-start mb-8">
-          <div>
+        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-4 mb-8">
+          <div className="max-w-full md:max-w-[60%]">
             <h1 className="text-4xl font-bold mb-2">{idea.title}</h1>
             <p className="text-muted-foreground">{idea.description}</p>
           </div>
-          <div className="flex gap-2">
+
+          {/* Buttons - Full width on mobile, inline on desktop */}
+          <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
             <button
               onClick={() => copyToClipboard(shareableLink)}
-              className="px-4 py-2 rounded-lg bg-primary/10 text-primary hover:bg-primary/20 transition-colors flex items-center gap-2"
+              className="px-4 py-2 rounded-lg bg-primary/10 text-primary hover:bg-primary/20 transition-colors flex items-center justify-center sm:justify-start gap-2 w-full sm:w-auto"
             >
               {copied ? (
                 <>
                   <Check className="w-4 h-4" />
-                  Copied
+                  <span className="hidden sm:inline-block ml-2">Copied</span>
                 </>
               ) : (
                 <>
                   <Copy className="w-4 h-4" />
-                  Copy Link
+                  <span className="hidden sm:inline-block ml-2">Copy Link</span>
                 </>
               )}
             </button>
+
             <button
               onClick={() => setShowArchiveConfirm(true)}
-              className="px-4 py-2 rounded-lg border border-border hover:bg-muted transition-colors flex items-center gap-2"
+              className="px-4 py-2 rounded-lg border border-border hover:bg-muted transition-colors flex items-center justify-center sm:justify-start gap-2 w-full sm:w-auto"
             >
               <Archive className="w-4 h-4" />
-              Archive
+              <span className="hidden sm:inline-block ml-2">Archive</span>
             </button>
+
             <button
               onClick={() => setShowDeleteConfirm(true)}
-              className="px-4 py-2 rounded-lg border border-destructive/30 text-destructive hover:bg-destructive/10 transition-colors flex items-center gap-2"
+              className="px-4 py-2 rounded-lg border border-destructive/30 text-destructive hover:bg-destructive/10 transition-colors flex items-center justify-center sm:justify-start gap-2 w-full sm:w-auto"
             >
               <Trash2 className="w-4 h-4" />
-              Delete
+              <span className="hidden sm:inline-block ml-2">Delete</span>
             </button>
           </div>
         </div>
