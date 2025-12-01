@@ -54,7 +54,7 @@ describe("ProvideFeedback Page", () => {
     render(<MockProvideFeedback />);
 
     await waitFor(() => {
-      expect(mockGetIdeaDetail).toHaveBeenCalledWith("123");
+      expect(mockGetIdeaDetail).toHaveBeenCalledWith("123", undefined);
     });
   });
 
@@ -80,7 +80,7 @@ describe("ProvideFeedback Page", () => {
     render(<MockProvideFeedback />);
 
     await waitFor(() => {
-      expect(mockGetIdeaDetail).toHaveBeenCalledWith("123");
+      expect(mockGetIdeaDetail).toHaveBeenCalledWith("123", undefined);
     });
   });
 
@@ -143,7 +143,7 @@ describe("ProvideFeedback Page", () => {
     render(<MockProvideFeedback />);
 
     await waitFor(() => {
-      expect(mockGetIdeaDetail).toHaveBeenCalledWith("123");
+      expect(mockGetIdeaDetail).toHaveBeenCalledWith("123", undefined);
     });
   });
 
@@ -213,7 +213,7 @@ describe("ProvideFeedback Page", () => {
     render(<MockProvideFeedback />);
 
     await waitFor(() => {
-      expect(mockGetIdeaDetail).toHaveBeenCalledWith("123");
+      expect(mockGetIdeaDetail).toHaveBeenCalledWith("123", undefined);
     });
   });
 });
