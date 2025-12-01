@@ -109,6 +109,13 @@ export default function ProvideFeedback() {
               How would you rate this idea?
             </h1>
 
+            <div className="mb-12 text-center bg-muted p-2 rounded-lg border-primary">
+              <b>
+                <p>{idea.title}</p>
+              </b>
+              <em>{idea.description}</em>
+            </div>
+
             <div className="mb-8">
               <div className="flex justify-between items-center mb-6">
                 <span className="text-sm font-semibold text-muted-foreground">
