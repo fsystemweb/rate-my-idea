@@ -156,6 +156,7 @@ export const getIdeaDashboard: RequestHandler = async (req, res) => {
 export const getFeedback: RequestHandler = async (req, res) => {
   try {
     const { ideaId } = req.params;
+    const { password } = req.query;
 
     if (!ObjectId.isValid(ideaId)) {
       res.status(400).json({ error: "Invalid idea ID" });
@@ -163,7 +164,22 @@ export const getFeedback: RequestHandler = async (req, res) => {
     }
 
     const db = getDB();
+    const ideaModel = new IdeaModel(db);
     const feedbackModel = new FeedbackModel(db);
+
+    const idea = await ideaModel.findById(new ObjectId(ideaId));
+
+    if (!idea) {
+      res.status(404).json({ error: "Idea not found" });
+      return;
+    }
+
+    if (idea.isPrivate && idea.password) {
+      if (!password || !(await verifyPassword(password as string, idea.password))) {
+        res.status(403).json({ error: "Password required for private idea" });
+        return;
+      }
+    }
 
     const feedback = await feedbackModel.findByIdeaId(new ObjectId(ideaId));
 

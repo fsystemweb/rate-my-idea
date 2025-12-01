@@ -83,6 +83,7 @@ export const getPublicIdeas: RequestHandler = async (req, res) => {
 export const getIdeaDetail: RequestHandler = async (req, res) => {
   try {
     const { id } = req.params;
+    const { password } = req.query;
 
     if (!ObjectId.isValid(id)) {
       res.status(400).json({ error: "Invalid idea ID" });
@@ -96,6 +97,13 @@ export const getIdeaDetail: RequestHandler = async (req, res) => {
     if (!idea) {
       res.status(404).json({ error: "Idea not found" });
       return;
+    }
+
+    if (idea.isPrivate && idea.password) {
+      if (!password || !(await verifyPassword(password as string, idea.password))) {
+        res.status(403).json({ error: "Password required for private idea" });
+        return;
+      }
     }
 
     res.json({
@@ -117,7 +125,7 @@ export const getIdeaDetail: RequestHandler = async (req, res) => {
 export const updateIdea: RequestHandler = async (req, res) => {
   try {
     const { id } = req.params;
-    const { creatorToken } = req.query;
+    const { creatorToken, password } = req.query;
     const { title, description, status, createdBy } = req.body;
 
     if (!ObjectId.isValid(id)) {
@@ -132,6 +140,13 @@ export const updateIdea: RequestHandler = async (req, res) => {
     if (!idea) {
       res.status(404).json({ error: "Idea not found" });
       return;
+    }
+
+    if (idea.isPrivate && idea.password) {
+      if (!password || !(await verifyPassword(password as string, idea.password))) {
+        res.status(403).json({ error: "Password required for private idea" });
+        return;
+      }
     }
 
     if (idea.creatorToken !== creatorToken) {
