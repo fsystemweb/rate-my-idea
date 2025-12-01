@@ -39,7 +39,8 @@ export default function IdeaDetail() {
       const feedbackData = await api.getFeedback(ideaId);
       setFeedbacks(feedbackData.feedback);
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : "Failed to load idea";
+      const errorMessage =
+        err instanceof Error ? err.message : "Failed to load idea";
       if (errorMessage.includes("Password required")) {
         setShowPasswordForm(true);
         setIsLoading(false);
@@ -115,9 +116,7 @@ export default function IdeaDetail() {
                 }`}
               />
               {passwordError && (
-                <p className="text-sm text-destructive mt-2">
-                  {passwordError}
-                </p>
+                <p className="text-sm text-destructive mt-2">{passwordError}</p>
               )}
             </div>
 
@@ -259,7 +258,7 @@ export default function IdeaDetail() {
           {/* CTA Section */}
           <div className="flex flex-col sm:flex-row gap-4">
             <Link
-              to={`/feedback/${idea.id}${password ? `?password=${encodeURIComponent(password)}` : ''}`}
+              to={`/feedback/${idea.id}${password ? `?password=${encodeURIComponent(password)}` : ""}`}
               className="flex-1 px-6 py-4 rounded-lg bg-gradient-to-r from-primary to-secondary text-primary-foreground font-semibold text-center hover:shadow-xl transition-all transform hover:scale-105"
             >
               Rate

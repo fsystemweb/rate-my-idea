@@ -41,8 +41,6 @@ export default function ProvideFeedback() {
     loadIdea();
   }, [ideaId, password]);
 
-
-
   const handleSubmitFeedback = async () => {
     if (!ideaId) return;
 
@@ -150,7 +148,11 @@ export default function ProvideFeedback() {
 
             <div className="flex gap-3">
               <button
-                onClick={() => navigate(`/idea/${ideaId}${password ? `?password=${encodeURIComponent(password)}` : ''}`)}
+                onClick={() =>
+                  navigate(
+                    `/idea/${ideaId}${password ? `?password=${encodeURIComponent(password)}` : ""}`,
+                  )
+                }
                 className="flex-1 px-4 py-3 rounded-lg border border-border text-foreground hover:bg-muted transition-colors"
               >
                 Back
