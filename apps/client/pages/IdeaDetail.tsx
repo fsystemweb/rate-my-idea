@@ -20,28 +20,48 @@ export default function IdeaDetail() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [copiedRateLink, setCopiedRateLink] = useState(false);
+  const [showPasswordForm, setShowPasswordForm] = useState(false);
+  const [password, setPassword] = useState("");
+  const [passwordError, setPasswordError] = useState("");
 
-  useEffect(() => {
-    const loadIdea = async () => {
-      if (!ideaId) {
-        setError("Invalid idea ID");
+  const loadIdea = async (password?: string) => {
+    if (!ideaId) {
+      setError("Invalid idea ID");
+      setIsLoading(false);
+      return;
+    }
+
+    try {
+      const ideaData = await api.getIdeaDetail(ideaId, password);
+      setIdea(ideaData);
+      setShowPasswordForm(false);
+
+      const feedbackData = await api.getFeedback(ideaId);
+      setFeedbacks(feedbackData.feedback);
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : "Failed to load idea";
+      if (errorMessage.includes("Password required")) {
+        setShowPasswordForm(true);
         setIsLoading(false);
         return;
       }
+      setError(errorMessage);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
-      try {
-        const ideaData = await api.getIdeaDetail(ideaId);
-        setIdea(ideaData);
+  const handlePasswordSubmit = () => {
+    if (!password.trim()) {
+      setPasswordError("Please enter the password");
+      return;
+    }
+    setPasswordError("");
+    setIsLoading(true);
+    loadIdea(password);
+  };
 
-        const feedbackData = await api.getFeedback(ideaId);
-        setFeedbacks(feedbackData.feedback);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : "Failed to load idea");
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
+  useEffect(() => {
     loadIdea();
   }, [ideaId]);
 
@@ -54,6 +74,67 @@ export default function IdeaDetail() {
             <div className="w-2 h-2 bg-primary rounded-full animate-bounce" />
             <div className="w-2 h-2 bg-primary rounded-full animate-bounce delay-100" />
             <div className="w-2 h-2 bg-primary rounded-full animate-bounce delay-200" />
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (showPasswordForm) {
+    return (
+      <div className="min-h-screen ">
+        <Header />
+        <div className="container max-w-md mx-auto px-4 py-12">
+          <div className="flex justify-center mb-6">
+            <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center">
+              <Lock className="w-8 h-8 text-primary" />
+            </div>
+          </div>
+
+          <h1 className="text-2xl font-bold text-center mb-2">
+            This Idea is Private
+          </h1>
+          <p className="text-center text-muted-foreground mb-8">
+            Enter the password to view this idea
+          </p>
+
+          <div className="space-y-4">
+            <div>
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                  setPasswordError("");
+                }}
+                placeholder="Enter password"
+                className={`w-full px-4 py-3 rounded-lg border-2 bg-card focus:outline-none transition-all ${
+                  passwordError
+                    ? "border-destructive focus:ring-2 focus:ring-destructive"
+                    : "border-border focus:border-primary focus:ring-2 focus:ring-primary"
+                }`}
+              />
+              {passwordError && (
+                <p className="text-sm text-destructive mt-2">
+                  {passwordError}
+                </p>
+              )}
+            </div>
+
+            <button
+              onClick={handlePasswordSubmit}
+              disabled={isLoading}
+              className="w-full px-4 py-3 rounded-lg bg-gradient-to-r from-primary to-secondary text-primary-foreground font-semibold hover:shadow-lg transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {isLoading ? "Loading..." : "Continue"}
+            </button>
+
+            <button
+              onClick={() => navigate("/")}
+              className="w-full px-4 py-3 rounded-lg border border-border text-foreground hover:bg-muted transition-colors"
+            >
+              Back to Home
+            </button>
           </div>
         </div>
       </div>
@@ -178,7 +259,7 @@ export default function IdeaDetail() {
           {/* CTA Section */}
           <div className="flex flex-col sm:flex-row gap-4">
             <Link
-              to={`/feedback/${idea.id}`}
+              to={`/feedback/${idea.id}${password ? `?password=${encodeURIComponent(password)}` : ''}`}
               className="flex-1 px-6 py-4 rounded-lg bg-gradient-to-r from-primary to-secondary text-primary-foreground font-semibold text-center hover:shadow-xl transition-all transform hover:scale-105"
             >
               Rate
