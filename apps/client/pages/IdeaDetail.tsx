@@ -36,7 +36,7 @@ export default function IdeaDetail() {
       setIdea(ideaData);
       setShowPasswordForm(false);
 
-      const feedbackData = await api.getFeedback(ideaId);
+      const feedbackData = await api.getFeedback(ideaId, password);
       setFeedbacks(feedbackData.feedback);
     } catch (err) {
       const errorMessage =
