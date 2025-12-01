@@ -137,6 +137,14 @@ export default function IdeaDetail() {
             </div>
           </div>
 
+          {/* Description */}
+          <div className="prose prose-sm dark:prose-invert max-w-none mb-12">
+            <h2 className="text-2xl font-bold mb-4">About This Idea</h2>
+            <p className="text-lg text-muted-foreground leading-relaxed whitespace-pre-wrap">
+              {idea.description}
+            </p>
+          </div>
+
           {/* Rating Display */}
           <div className="flex items-center gap-6 mb-12 p-6 rounded-lg bg-gradient-to-br from-primary/5 to-secondary/5 border border-primary/10">
             <div className="flex items-center gap-3">
@@ -165,14 +173,6 @@ export default function IdeaDetail() {
                 Based on {idea.responseCount} ratings from the community
               </p>
             </div>
-          </div>
-
-          {/* Description */}
-          <div className="prose prose-sm dark:prose-invert max-w-none mb-12">
-            <h2 className="text-2xl font-bold mb-4">About This Idea</h2>
-            <p className="text-lg text-muted-foreground leading-relaxed whitespace-pre-wrap">
-              {idea.description}
-            </p>
           </div>
 
           {/* CTA Section */}
