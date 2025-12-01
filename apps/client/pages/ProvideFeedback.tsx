@@ -54,7 +54,7 @@ export default function ProvideFeedback() {
       setSubmitted(true);
       setTimeout(() => {
         navigate("/");
-      }, 3000);
+      }, 1500);
     } catch (err) {
       setError(
         err instanceof Error ? err.message : "Failed to submit feedback",
