@@ -17,11 +17,23 @@
   <a href="CONTRIBUTING.md">Contributing Guidelines</a>
   ·
   <a href="https://github.com/fsystemweb/rate-my-idea/issues">Submit an Issue</a>
-  ·
-  <a href="DEPLOYMENT.md">Deployment</a>
   <br>
   <br>
 </p>
+
+<div align="center">
+
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white)
+![Node.js](https://img.shields.io/badge/Node.js-339933?logo=node.js&logoColor=white)
+![Express](https://img.shields.io/badge/Express-000000?logo=express&logoColor=white)
+![MongoDB](https://img.shields.io/badge/MongoDB-47A248?logo=mongodb&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-646CFF?logo=vite&logoColor=white)
+![Vitest](https://img.shields.io/badge/Vitest-6E9F18?logo=vitest&logoColor=white)
+![Turbo](https://img.shields.io/badge/Turbo-000000?logo=turborepo&logoColor=white)
+![Prettier](https://img.shields.io/badge/Prettier-F7B93E?logo=prettier&logoColor=black)
+![Sentry](https://img.shields.io/badge/Sentry-000000?logo=sentry&logoColor=white)
+
+</div>
 
 <hr>
 
