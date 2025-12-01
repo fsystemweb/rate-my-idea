@@ -83,9 +83,9 @@ export default function Dashboard() {
       setData((prev) =>
         prev
           ? {
-            ...prev,
-            idea: { ...prev.idea, status: "archived" },
-          }
+              ...prev,
+              idea: { ...prev.idea, status: "archived" },
+            }
           : null,
       );
 
