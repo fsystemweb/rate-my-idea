@@ -27,7 +27,6 @@ jobs:
           cd dist/api
           # Copy package.json files
           cp ../../apps/api/package*.json .
-          echo "web: node index.mjs" > Procfile
           # Copy root node_modules
           cp -r ../../node_modules .
           # Zip everything
