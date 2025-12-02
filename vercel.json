@@ -1,5 +1,13 @@
 {
+  "version": 2,
+  "buildCommand": "turbo run build --filter=client",
+  "outputDirectory": "dist/client",
+  "installCommand": "npm i",
+  "framework": null,
   "rewrites": [
-    { "source": "/(.*)", "destination": "/" }
+    {
+      "source": "/(.*)",
+      "destination": "/"
+    }
   ]
 }
