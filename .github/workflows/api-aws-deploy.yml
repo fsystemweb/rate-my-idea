@@ -25,7 +25,7 @@ jobs:
       - name: Zip API source
         run: |
           cd apps/api
-          zip -r ../../api.zip * .[^.]*
+          zip -r api.zip . -x "*.git*"
 
       # 5️⃣ Deploy API to Elastic Beanstalk
       - name: Deploy API to AWS Elastic Beanstalk
