@@ -37,4 +37,4 @@ jobs:
           environment_name: "rate-idea-api-prod"
           version_label: ${{ github.sha }}
           region: "us-east-1"
-          deployment_package: "apps/api/api.zip"
+          deployment_package: "api.zip"
