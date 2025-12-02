@@ -6,7 +6,7 @@
   "scripts": {
     "build": "turbo run build",
     "build:client": "turbo run build --filter=client",
-    "build:api": "turbo run build --filter=api --force",
+    "build:api": "turbo run build --filter=api",
     "dev": "turbo run dev --parallel",
     "dev:api": "turbo run dev --filter=api",
     "prod:api": "cd apps/api && npm run prod",
