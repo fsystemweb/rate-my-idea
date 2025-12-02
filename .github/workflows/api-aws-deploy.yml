@@ -21,11 +21,11 @@ jobs:
       - name: Build monorepo with Turbo
         run: npm run build:api
 
-      # 4️⃣ Zip only the API source folder (Elastic Beanstalk needs the source)
-      - name: Zip API source
+      # 4️⃣ Zip
+      - name: Zip API
         run: |
           cd apps/api
-          zip -r ../../api.zip * .[^.]*
+          zip -r ../../api.zip dist package.json package-lock.json node_modules
 
       # 5️⃣ Deploy API to Elastic Beanstalk
       - name: Deploy API to AWS Elastic Beanstalk
