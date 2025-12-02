@@ -22,12 +22,10 @@ jobs:
         run: npm run build:api
 
       # 4️⃣ Zip
-      - name: Zip API for EB
+      - name: Zip API
         run: |
-          cd dist/api
-          cp ../../apps/api/package*.json .
-          cp -r ../../apps/api/node_modules .
-          zip -r ../../../api.zip *
+          cd apps/api
+          zip -r ../../api.zip dist package.json package-lock.json node_modules
 
       # 5️⃣ Deploy API to Elastic Beanstalk
       - name: Deploy API to AWS Elastic Beanstalk
