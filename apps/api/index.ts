@@ -35,6 +35,8 @@ export function createApp() {
     next();
   });
 
+  app.get("/ping", (req, res) => res.json({ status: "ok" }));
+
   app.post("/api/ideas", ideasRoutes.createIdea);
   app.get("/api/ideas", ideasRoutes.getPublicIdeas);
   app.get("/api/ideas/:id", ideasRoutes.getIdeaDetail);
