@@ -4,8 +4,7 @@
   "type": "module",
   "scripts": {
     "dev": "tsx dev-server.ts",
-    "start": "node index.mjs",
-    "start-tsx": "tsx index.ts",
+    "prod": "tsx index.ts",
     "build": "vite build"
   },
   "dependencies": {
