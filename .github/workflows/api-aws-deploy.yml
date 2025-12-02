@@ -25,11 +25,8 @@ jobs:
       - name: Zip API for EB
         run: |
           cd dist/api
-          # Copy package.json files
           cp ../../apps/api/package*.json .
-          # Copy root node_modules
-          cp -r ../../node_modules .
-          # Zip everything
+          cp -r ../../apps/api/node_modules .
           zip -r ../../../api.zip *
 
       # 5️⃣ Deploy API to Elastic Beanstalk
