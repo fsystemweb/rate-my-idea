@@ -71,6 +71,6 @@ temp/
 !terraform/terraform.tfvars.example
 terraform/.terraform/
 terraform/.terraform.lock.hcl
-# Terraform backup files and folders
-*.backup
-*~backup
+# Ignore Terraform state files (all)
+*.tfstate
+*.tfstate.*
