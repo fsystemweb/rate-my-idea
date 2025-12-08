@@ -29,11 +29,18 @@ resource "aws_ecr_repository" "app" {
 
 # IAM Role for App Runner to access ECR
 resource "aws_iam_role" "app_runner_role" {
-  name = "${var.app_name}-app-runner-role"
+  name = "${var.app_name}-app-runner-ecr-role"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
+      {
+        Action = "sts:AssumeRole"
+        Effect = "Allow"
+        Principal = {
+          Service = "build.apprunner.amazonaws.com"
+        }
+      },
       {
         Action = "sts:AssumeRole"
         Effect = "Allow"
@@ -118,7 +125,6 @@ resource "aws_apprunner_auto_scaling_configuration_version" "app" {
   max_concurrency                   = var.max_concurrency
   max_size                          = var.max_instances
   min_size                          = var.min_instances
-
   tags = {
     Name = var.app_name
   }
