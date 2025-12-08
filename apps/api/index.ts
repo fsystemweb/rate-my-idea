@@ -12,9 +12,11 @@ import * as feedbackRoutes from "./routes/feedback";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Load from monorepo root .env
+// Load from monorepo root .env - optional, for local development only
 const envPath = path.resolve(__dirname, "../../.env");
-dotenv.config({ path: envPath });
+dotenv.config({ path: envPath, override: false });
+
+console.log("MONGODB_URI:", process.env.MONGODB_URI ? "set" : "not set");
 
 export function createApp() {
   const app = express();
@@ -22,6 +24,8 @@ export function createApp() {
   app.use(express.json());
 
   let dbReady = false;
+
+  // Connect to DB once on first request
   app.use(async (req, res, next) => {
     if (!dbReady) {
       try {
@@ -29,7 +33,8 @@ export function createApp() {
         dbReady = true;
         console.log("Database connected");
       } catch (e) {
-        console.warn("DB connection failed", e);
+        console.error("DB connection failed:", e);
+        return res.status(500).json({ error: "Database connection failed", details: String(e) });
       }
     }
     next();
@@ -54,9 +59,8 @@ const app = createApp();
 
 export default serverless(app);
 
-if (process.env.DEV) {
-  const PORT = process.env.PORT || 3000;
-  app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-  });
-}
+// Always listen in App Runner environment
+const PORT = parseInt(process.env.PORT || "3000", 10);
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`Server running on port ${PORT}`);
+});

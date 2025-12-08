@@ -63,3 +63,14 @@ temp/
 # .DS_Store
 # Thumbs.db
 .turbo/
+
+
+# Ignore Terraform variable files
+./terraform/terraform.tfvars
+*.tfvars
+!terraform/terraform.tfvars.example
+terraform/.terraform/
+terraform/.terraform.lock.hcl
+# Ignore Terraform state files (all)
+*.tfstate
+*.tfstate.*
