@@ -1,13 +1,14 @@
 import { RequestHandler } from "express";
 import { ObjectId } from "mongodb";
 import { getDB } from "../db";
-import { IdeaModel } from "../../models/idea";
-import { FeedbackModel } from "../../models/feedback";
+
 import {
   generateCreatorToken,
   hashPassword,
   verifyPassword,
 } from "../utils/auth";
+import { IdeaModel } from "apps/models/idea";
+import { FeedbackModel } from "apps/models/feedback";
 
 export const createIdea: RequestHandler = async (req, res) => {
   try {
