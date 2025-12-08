@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "tsx dev-server.ts",
     "prod": "tsx index.ts",
-    "build": "vite build"
+    "build": "vite build",
+    "start": "node dist/index.js"
   },
   "dependencies": {
     "express": "^5.1.0",

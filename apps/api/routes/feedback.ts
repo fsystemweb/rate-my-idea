@@ -1,9 +1,9 @@
 import { RequestHandler } from "express";
 import { ObjectId } from "mongodb";
 import { getDB } from "../db";
-import { IdeaModel } from "../../models/idea";
-import { FeedbackModel } from "../../models/feedback";
 import { verifyPassword, analyzeSentiment } from "../utils/auth";
+import { FeedbackModel } from "apps/models/feedback";
+import { IdeaModel } from "apps/models/idea";
 
 export const submitFeedback: RequestHandler = async (req, res) => {
   try {
