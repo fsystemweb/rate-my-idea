@@ -24,6 +24,11 @@ export default defineConfig({
     minify: false,
     sourcemap: true,
   },
+  resolve: {
+    alias: {
+      "apps/models": resolve(__dirname, "../models"),
+    },
+  },
   ssr: {
     noExternal: true,
   },
