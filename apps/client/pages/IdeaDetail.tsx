@@ -247,7 +247,7 @@ export default function IdeaDetail() {
                 ))}
               </div>
             </div>
-            <div className="flex-1">
+            <div className="hidden md:block flex-1">
               <p className="font-semibold mb-1">Average Rating</p>
               <p className="text-sm text-muted-foreground">
                 Based on {idea.responseCount} ratings from the community
