@@ -134,9 +134,11 @@ export default function Index() {
                 <h3 className="text-xl font-bold mb-2 line-clamp-2 group-hover:text-primary transition-colors">
                   {idea.title}
                 </h3>
-                <p className="text-muted-foreground text-sm mb-4 flex-grow line-clamp-3">
-                  {idea.description}
-                </p>
+                <div className="flex-grow mb-4">
+                  <p className="text-muted-foreground text-sm line-clamp-3">
+                    {idea.description}
+                  </p>
+                </div>
 
                 <div className="space-y-4 pt-4 border-t border-border">
                   <div className="flex items-center justify-between">
@@ -145,11 +147,10 @@ export default function Index() {
                         {[...Array(5)].map((_, i) => (
                           <Star
                             key={i}
-                            className={`w-4 h-4 ${
-                              i < Math.round(idea.avgRating / 2)
-                                ? "fill-yellow-400 text-yellow-400"
-                                : "text-muted"
-                            }`}
+                            className={`w-4 h-4 ${i < Math.round(idea.avgRating / 2)
+                              ? "fill-yellow-400 text-yellow-400"
+                              : "text-muted"
+                              }`}
                           />
                         ))}
                       </div>
