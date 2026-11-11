@@ -7,6 +7,7 @@ import serverless from "serverless-http";
 import { connectDB } from "./db";
 import * as ideasRoutes from "./routes/ideas";
 import * as feedbackRoutes from "./routes/feedback";
+import { createIdeaSubmissionLimiter } from "./middleware/rate-limit";
 
 // Create __dirname for ES modules
 const __filename = fileURLToPath(import.meta.url);
@@ -23,7 +24,14 @@ export function createApp() {
   app.use(cors());
   app.use(express.json());
 
+  // The API always sits behind at least one proxy (ALB on AWS, API Gateway
+  // via serverless-http), so trust one hop: that lets req.ip be the real
+  // client address (used for rate limiting) without letting clients spoof
+  // X-Forwarded-For from arbitrary depths.
+  app.set("trust proxy", 1);
+
   let dbReady = false;
+  const ideaSubmissionLimiter = createIdeaSubmissionLimiter();
 
   // Connect to DB once on first request
   app.use(async (req, res, next) => {
@@ -42,7 +50,10 @@ export function createApp() {
 
   app.get("/ping", (req, res) => res.json({ status: "ok" }));
 
-  app.post("/api/ideas", ideasRoutes.createIdea);
+  // Anonymous idea creation is the public write entry point; a per-IP
+  // rate limiter sits in front of it to curb abuse. Authenticated/
+  // creatorToken paths keep working as before.
+  app.post("/api/ideas", ideaSubmissionLimiter, ideasRoutes.createIdea);
   app.get("/api/ideas", ideasRoutes.getPublicIdeas);
   app.get("/api/ideas/:id", ideasRoutes.getIdeaDetail);
   app.put("/api/ideas/:id", ideasRoutes.updateIdea);
