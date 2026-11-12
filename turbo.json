@@ -6,6 +6,12 @@
       "outputs": ["dist/**"],
       "env": ["MONGODB_URI", "DEV"]
     },
+    "client#build": {
+      "outputs": ["../../dist/client/**"]
+    },
+    "api#build": {
+      "outputs": ["../../dist/api/**"]
+    },
     "dev": {
       "cache": false,
       "persistent": true
